@@ -1,0 +1,485 @@
+<title>Base Maestra — Hoteles GHL (concepto)</title>
+<style>
+  :root {
+    --navy:#023859; --mid:#2a5e95; --blue:#6399ba; --gray:#808080;
+    --lgray:#d1d1d1; --white:#fff; --bg:#f5f7fa;
+    --green-bg:#c6efce; --green-fg:#276221;
+    --yellow-bg:#fff3cd; --yellow-fg:#856404;
+    --red-bg:#ffc7ce;   --red-fg:#9c0006;
+    --info-bg:#dce9f5;  --info-fg:#1f4e79;
+    --sans:'Segoe UI',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--bg);color:#1a1a2e;font-size:13px;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+
+  /* Concept note */
+  .concept-banner{
+    background:#FFF9EC;border-bottom:1px solid #F0DFB0;color:#7A5A00;
+    padding:9px 32px;font-size:12px;
+  }
+  .concept-banner b{color:#5C4300;}
+
+  /* Header */
+  .site-header{background:var(--navy);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .site-header h1{color:var(--white);font-size:16px;font-weight:700;letter-spacing:.02em;}
+  .site-header .sub{color:var(--blue);font-size:11px;margin-top:3px;}
+  .header-right{display:flex;align-items:center;gap:10px;}
+  .header-badge{background:var(--mid);color:var(--white);border-radius:6px;padding:6px 14px;font-size:11px;font-weight:600;white-space:nowrap;}
+
+  /* Ciclo tabs */
+  .mes-bar{background:var(--mid);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+  .mes-tab{padding:10px 20px;color:rgba(255,255,255,.65);font-size:12px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;user-select:none;}
+  .mes-tab:hover{color:var(--white);}
+  .mes-tab.active{color:var(--white);border-bottom-color:var(--blue);}
+  .mes-tab-all{border-right:1px solid rgba(255,255,255,.2);margin-right:4px;}
+
+  /* KPIs */
+  .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 32px 0;}
+  .kpi{background:var(--white);border-radius:10px;padding:16px 18px;border-top:3px solid var(--navy);box-shadow:0 1px 4px rgba(0,0,0,.06);}
+  .kpi .num{font-size:28px;font-weight:700;color:var(--navy);line-height:1;font-variant-numeric:tabular-nums;}
+  .kpi .lbl{font-size:10px;color:var(--gray);margin-top:5px;text-transform:uppercase;letter-spacing:.05em;}
+
+  /* Controls */
+  .controls{display:flex;align-items:center;gap:10px;padding:18px 32px 12px;flex-wrap:wrap;}
+  .controls input{flex:1;min-width:180px;padding:8px 12px;border:1px solid var(--lgray);border-radius:8px;font-family:inherit;font-size:12px;outline:none;}
+  .controls input:focus{border-color:var(--blue);}
+  .controls select{padding:8px 12px;border:1px solid var(--lgray);border-radius:8px;font-family:inherit;font-size:12px;outline:none;background:var(--white);cursor:pointer;}
+  .controls select:focus{border-color:var(--blue);}
+  .count-label{margin-left:auto;font-size:11px;color:var(--gray);white-space:nowrap;}
+
+  /* Legend */
+  .legend{display:flex;gap:16px;padding:0 32px 14px;flex-wrap:wrap;}
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gray);}
+  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+  /* Table */
+  .table-wrap{padding:0 32px 40px;overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;background:var(--white);border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.07);font-size:12px;min-width:1180px;}
+  thead th{background:var(--navy);color:var(--white);font-weight:600;padding:10px 12px;text-align:left;white-space:nowrap;font-size:11px;letter-spacing:.03em;}
+  thead th.sortable{cursor:pointer;user-select:none;}
+  thead th.sortable:hover{background:var(--mid);}
+  thead th .si{opacity:.5;margin-left:4px;font-size:9px;}
+  thead th .si.active{opacity:1;}
+  tbody tr{border-bottom:1px solid #eef0f3;transition:background .15s;}
+  tbody tr:hover{background:#f0f5fa;}
+  tbody tr:last-child{border-bottom:none;}
+  td{padding:9px 12px;vertical-align:middle;}
+  td.hotel{font-weight:600;color:var(--navy);min-width:190px;white-space:nowrap;}
+  td.contact{color:var(--gray);font-size:11px;min-width:150px;}
+  td.contact .email{color:#aaa;font-size:10px;}
+  td.desc{max-width:260px;line-height:1.4;}
+  td.comment{max-width:180px;line-height:1.4;color:var(--gray);font-size:11px;}
+  td.center{text-align:center;}
+  .empty-cell{color:#ccc;}
+
+  .mes-chip{display:inline-block;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;background:var(--navy);color:var(--white);white-space:nowrap;}
+
+  /* Mod select — plain text style, no pill (matches base design) */
+  select.mod-select{
+    font-family:inherit;border:none;background:transparent;font-size:12px;font-weight:700;cursor:pointer;padding:2px 4px 2px 0;
+  }
+  select.mod-select.mod-si{color:var(--green-fg);}
+  select.mod-select.mod-no{color:var(--gray);font-weight:400;}
+
+  /* Estado select — badge style (matches base design) */
+  select.estado-select{
+    font-family:inherit;border:none;border-radius:5px;padding:3px 22px 3px 9px;font-size:10px;font-weight:600;cursor:pointer;
+    -webkit-appearance:none;appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='6'><path d='M0 0L4 6L8 0Z' fill='%23555'/></svg>");
+    background-repeat:no-repeat;background-position:right 8px center;
+  }
+  select.estado-select.actualizado  {background-color:var(--green-bg);color:var(--green-fg);}
+  select.estado-select.pendiente    {background-color:var(--yellow-bg);color:var(--yellow-fg);}
+  select.estado-select.sin-respuesta{background-color:var(--red-bg);color:var(--red-fg);}
+  select.estado-select.sin-mod      {background-color:var(--info-bg);color:var(--info-fg);}
+
+  input[type=checkbox]{width:15px;height:15px;accent-color:var(--navy);cursor:pointer;}
+
+  .empty-state{text-align:center;padding:48px 32px;color:var(--gray);}
+  .empty-state .icon{font-size:32px;margin-bottom:12px;}
+
+  @media(max-width:900px){.kpi-row{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:600px){.kpi-row{grid-template-columns:1fr 1fr;}.controls{flex-direction:column;}}
+
+  /* Diálogos activos — expand por hotel */
+  th.expand-col{width:32px;}
+  tr.main-row{cursor:pointer;}
+  .chev{display:inline-flex;width:20px;height:20px;align-items:center;justify-content:center;color:var(--blue);font-size:11px;transition:transform .15s;}
+  tr.main-row.open .chev{transform:rotate(90deg);}
+  tr.dialog-detail-row{display:none;background:#fafcff;}
+  tr.dialog-detail-row.open{display:table-row;}
+  tr.dialog-detail-row td{padding:0;border-top:1px dashed var(--lgray);}
+  .detail-inner{padding:16px 20px 20px;}
+  .detail-inner h4{font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+  .dialog-search{width:100%;max-width:360px;padding:7px 11px;border:1px solid var(--lgray);border-radius:8px;font-family:inherit;font-size:12px;margin-bottom:10px;outline:none;}
+  .dialog-search:focus{border-color:var(--blue);}
+  .dialog-scroll{max-height:420px;overflow-y:auto;border:1px solid #e1e7ed;border-radius:8px;}
+  table.mod-table{width:100%;border-collapse:collapse;font-size:11.5px;}
+  table.mod-table thead th{background:#eef3f9;color:var(--navy);font-weight:600;padding:6px 10px;text-align:left;border-bottom:1px solid #dde3ea;position:sticky;top:0;}
+  table.mod-table td{padding:7px 10px;border-bottom:1px solid #eef0f3;vertical-align:top;}
+  table.mod-table tr:nth-child(even) td{background:#f7f9fc;}
+  td.codigo{font-weight:700;color:var(--mid);white-space:nowrap;width:70px;}
+  td.titulo{font-weight:600;color:var(--navy);min-width:170px;white-space:nowrap;}
+  td.contenido{white-space:pre-wrap;line-height:1.4;color:#3B4A5A;}
+  .no-dialogos{padding:16px;color:var(--gray);font-style:italic;}
+
+  /* Columna "Actualizado en canal" — barra de progreso + nombres siempre visibles */
+  td.channel-col{min-width:210px;}
+  .channel-progress-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;}
+  .channel-progress-pct{font-size:12px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;}
+  .channel-progress-count{font-size:10px;color:var(--gray);}
+  .channel-progress-track{height:6px;background:#eef0f3;border-radius:99px;overflow:hidden;margin-bottom:8px;}
+  .channel-progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--mid),var(--blue));transition:width .3s ease;}
+  .channel-progress-fill.full{background:linear-gradient(90deg,#2f8f52,#3fb96a);}
+  .channel-grid-compact{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;}
+  .channel-item{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--gray);white-space:nowrap;}
+  .channel-item input{width:12px;height:12px;flex-shrink:0;accent-color:var(--navy);cursor:pointer;}
+  .channel-item.done{color:var(--navy);font-weight:600;}
+</style>
+
+<div class="concept-banner">
+  💡 <b>Maqueta de concepto</b> — 10 de los 42 hoteles reales del ciclo Jun-26, con el mismo lenguaje visual del dashboard de seguimiento base. Los selectores y casillas son funcionales aquí, pero no se guardan al recargar.
+</div>
+
+<div class="site-header">
+  <div>
+    <h1>Base Maestra — Hoteles GHL</h1>
+    <div class="sub">Agencia Digital GHL &nbsp;|&nbsp; Consolidado por hotel · vista de consulta para todas las áreas</div>
+  </div>
+  <div class="header-right">
+    <div class="header-badge" id="headerBadge">—</div>
+  </div>
+</div>
+
+<div class="mes-bar" id="mesBar"></div>
+
+<div class="kpi-row" id="kpiRow"></div>
+
+<div class="controls">
+  <input type="text" id="searchInput" placeholder="Buscar hotel, contacto o descripción…" oninput="applyFilters()">
+  <select id="filterMod" onchange="applyFilters()">
+    <option value="">Todas — ¿Modificaciones?</option>
+    <option value="Sí">Con modificaciones</option>
+    <option value="No">Sin modificaciones</option>
+  </select>
+  <select id="filterEstado" onchange="applyFilters()">
+    <option value="">Todos — Estado</option>
+    <option value="Actualizado">Actualizado</option>
+    <option value="Pendiente actualización">Pendiente actualización</option>
+    <option value="Sin respuesta">Sin respuesta</option>
+    <option value="Sin modificaciones">Sin modificaciones</option>
+  </select>
+  <span class="count-label" id="countLabel"></span>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#c6efce;border:1px solid #276221"></div>Actualizado</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fff3cd;border:1px solid #856404"></div>Pendiente actualización</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffc7ce;border:1px solid #9c0006"></div>Sin respuesta</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#dce9f5;border:1px solid #1f4e79"></div>Sin modificaciones</div>
+</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th class="expand-col"></th>
+      <th class="sortable" onclick="sortTable('hotel')">Hotel <span class="si" id="si-hotel">⇅</span></th>
+      <th class="sortable" onclick="sortTable('contacto')">Contacto <span class="si" id="si-contacto">⇅</span></th>
+      <th class="sortable" onclick="sortTable('ciclo')">Ciclo <span class="si" id="si-ciclo">⇅</span></th>
+      <th class="sortable" onclick="sortTable('modificaciones')">¿Modificaciones? <span class="si" id="si-modificaciones">⇅</span></th>
+      <th class="sortable" onclick="sortTable('desc')">Descripción de la modificación <span class="si" id="si-desc">⇅</span></th>
+      <th class="sortable" onclick="sortTable('canales')">Actualizado en canales <span class="si" id="si-canales">⇅</span></th>
+      <th class="sortable" onclick="sortTable('comentarios')">Comentarios <span class="si" id="si-comentarios">⇅</span></th>
+      <th class="sortable" onclick="sortTable('estado')">Estado <span class="si" id="si-estado">⇅</span></th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
+</div>
+
+<script id="dialogosData" type="application/json">{"1": {"fechaCorte": "02/06/2026 14:43", "dialogos": [{"codigo": "19-01", "titulo": "Location", "contenido": "Esta es nuestra dirección\nCl. 24 #8B-58, Getsemaní, Cartagena de Indias, Provincia de Cartagena, Bolívar, Colombia.\nHaga clic en DETALLES para ubicarnos en el mapa"}, {"codigo": "16-02", "titulo": "Contact staff", "contenido": "Para ponerse en contacto con el personal del hotel, a continuación encontrará los datos de cada departamento:\n\nRecepción\nEmail: recepcion.arsenal@ghlhoteles.com\nTeléfono: +57 350 7293732\nTeléfono gratuito #: +57 350 7293732\nSMS: No disponible\n\nReserva\nEmail: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 316 0107651\nTeléfono gratuito #: +57 316 0107651\nSMS: No disponible\n\nEventos\nEmail: eventos.arsenal@ghlhoteles.com\nTeléfono: +57 316 0107654\nTeléfono gratuito #: +57 316 0107654\nSMS: No disponible"}, {"codigo": "10-02", "titulo": "Stars & category", "contenido": "Nuestro hotel forma parte de GHL Hoteles.\n- Clasificación por estrellas: 5 estrellas.\n- Categoría de servicio: Lujoso.\nMás información aquí"}, {"codigo": "10-03", "titulo": "Reservation confirmation", "contenido": "• Si ha reservado directamente con el hotel:\nPor favor, haga clic en este enlace para gestionar su reserva: encontrar mi reserva.\n• Si ha reservado a través de una OTA (Booking, Expedia..):\nPuede comprobar el estado de su reserva consultando el correo electrónico de confirmación que recibió de la OTA y consultando la app de la OTA."}, {"codigo": "10-04", "titulo": "Reservation modification", "contenido": "Para solicitar una modificación, por favor contáctanos directamente:\nCorreo: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "10-05", "titulo": "Reservation cancellation policy", "contenido": "Las reservas flexibles pueden ser integralmente reembolsadas hasta 48 horas antes del check-in. Otros tipos de reservas no pueden ser reembolsadas."}, {"codigo": "10-06", "titulo": "Reservation cancellation", "contenido": "Para solicitar una cancelación, por favor contáctenos directamente:\nCorreo: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "10-07", "titulo": "Loyalty program", "contenido": "Con GHL Plus, cada viaje te recompensa. Disfruta de beneficios exclusivos, experiencias únicas y más ventajas en cada estadía en nuestros hoteles GHL.\nPorque tus noches ahora valen más. Inscríbete gratis y comienza a disfrutar aquí: aquí\n• Si desea recibir nuestra newsletter, haga clic aquí\n• Si desea unirse a nuestro programa de fidelidad, haga clic aquí\n• Para leer las Normas del Programa, haga clic aquí"}, {"codigo": "10-08", "titulo": "Discount - Promo code", "contenido": "Actualmente no disponemos de códigos promocionales; Sin embargo, puedes disfrutar de una experiencia exclusiva con nuestras ofertas especiales si buscas una estancia inolvidable.\n¡Puedes consultar la disponibilidad y hacer tu reserva aquí!\naquí"}, {"codigo": "10-09", "titulo": "Direct booking advantages", "contenido": "Al reservar directamente con nosotros, disfrutará de las siguientes ventajas (sujetas a disponibilidad):\n\nPrecio y pago:\n- Pago seguro\n- Pagar al llegar\n\nDisponible de manera gratuita:\n- Caja fuerte\n- Wi-Fi\n\nVentajas:\n- Comunicación directa\n- Sin costes ocultos\n- Servicio personalizado\n\nDescuentos:\n- 20% en gastos de alimentación"}, {"codigo": "10-11", "titulo": "Price match policy", "contenido": "Si buscas igualar un precio o solicitar una igualación de precios, ten en cuenta que actualmente no igualamos precios publicados en otros canales. Para conseguir la mejor tarifa disponible, recomendamos reservar directamente en nuestra página web oficial aquí: aquí"}, {"codigo": "10-13", "titulo": "Opening, closing & renovation", "contenido": "Abrimos todo el año.\nLa propiedad no está en proceso de renovación, ni está prevista ninguna en este momento."}, {"codigo": "10-17", "titulo": "Travel agent", "contenido": "Trabajamos con agentes de viajes.\nPara cualquier solicitud relacionada con agencias de viajes, por favor contáctenos en:\nCorreo: joao.oliveros@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "10-19", "titulo": "Special offers", "contenido": "Echa un vistazo a nuestras ofertas especiales"}, {"codigo": "10-26", "titulo": "Rate plans & upgrades", "contenido": "Las tarifas comienzan desde COP $650,000 por noche para una habitación estándar (temporada baja). Los precios pueden variar según la estación y el tipo de habitación.\n¡Puedes consultar la disponibilidad y hacer tu reserva aquí!\naquí"}, {"codigo": "10-31", "titulo": "Minimum stay", "contenido": "No hay estancia mínima en nuestra propiedad"}, {"codigo": "10-32", "titulo": "Long stay", "contenido": "-No hay ningún descuento específico para las estancias largas\n-No hay duración máxima de la estancia"}, {"codigo": "10-33", "titulo": "Early booking", "contenido": "Las reservas directas realizadas hasta 60 días por adelantado se benefician automáticamente de un 15 % de descuento."}, {"codigo": "10-41", "titulo": "Day use / day pass", "contenido": "Desafortunadamente, los pases de un día no están disponibles.."}, {"codigo": "10-51", "titulo": "City tax, fees & VAT", "contenido": "No hay impuesto municipal"}, {"codigo": "10-55", "titulo": "Vouchers", "contenido": "No ofrecemos vales."}, {"codigo": "10-71", "titulo": "Payment method", "contenido": "Política general:\n• Dependiendo de la tarifa que elija, el pago se hará en el momento de la reserva o en check-in.\n• La tarjeta de crédito no es obligatoria durante la solicitud de reserva.\n• En el momento del check-in, necesitará una tarjeta de crédito o débito válida y documento de identidad con foto.\n• Si tiene cualquier dificultad para hacer su reserva, contáctenos y le ayudaremos.\nMedios de pago:\nAceptamos los siguientes métodos de pago:\n• MasterCard\n• American Express\n• Maestro\nNo se aceptan métodos de pago que no hayan sido mencionados o figuren en la lista anterior.\nPago en efectivo:\n• Aceptamos pagos en efectivo en recepción.\n• Necesita una tarjeta de crédito o débito válida como garantía para reservar su estancia online, incluso si va a pagar en efectivo. Si no tiene una tarjeta de crédito o débito, póngase en contacto con nosotros.\nRecargo por pago con tarjeta de crédito:\n• No se aplica ningún recargo por pagos con tarjeta de crédito.\nPago con varias tarjetas:\n• No podemos dividir el pago entre diferentes tarjetas de crédito.\nDepósito:\n• No se requiere un depósito de seguridad.\nCuotas:\n• No aceptamos pagos en cuotas.\nPago por otra persona:\n• No aceptamos pagos hechos por otra persona."}, {"codigo": "11-01", "titulo": "Check-in time", "contenido": "Puede hacer su check-in a cualquier hora después de las 15:00.\nPodemos ofrecerle el check-in anticipado a partir de las 07:00 por un 50 % adicional del precio de la habitación por habitación.\nPara más información, haga clic AQUÍ."}, {"codigo": "11-02", "titulo": "Early check-in reservation", "contenido": "Si desea solicitar un check-in anticipado, por favor envíe un correo electrónico a reservas.arsenal@ghlhoteles.com para verificar su disponibilidad. La confirmación está sujeta a la ocupación del hotel y no puede garantizarse sin validación previa. Nuestro equipo revisará tu solicitud y confirmará si es posible."}, {"codigo": "11-03", "titulo": "Online check-in", "contenido": "Lamentablemente, no ofrecemos la posibilidad de check-in online"}, {"codigo": "11-11", "titulo": "Check-out time", "contenido": "Normalmente el check-out se debe realizar antes de las 12:00.\nEs posible solicitar check-out tardío hasta las 18:00, sujeto a disponibilidad, por un 50 % adicional del precio de la habitación por habitación.\nPara más información, haga clic AQUÍ."}, {"codigo": "11-12", "titulo": "Late check-out reservation", "contenido": "Si desea solicitar un check-out tardío, la validación debe realizarse el mismo día de su salida, ya que está sujeta exclusivamente a disponibilidad. No puede confirmarse ni organizarse previamente a través de este canal, ya que no podemos garantizar una respuesta inmediata. Recomendamos gestionarlo directamente en recepción el día de la salida para verificar la disponibilidad."}, {"codigo": "11-21", "titulo": "Store luggage", "contenido": "Todos los huéspedes pueden guardar su equipaje de forma gratuita antes de la entrada y después de la salida."}, {"codigo": "11-31", "titulo": "Front desk", "contenido": "La recepción está abierta 24/7\nPara más información, haga clic AQUÍ."}, {"codigo": "12-01", "titulo": "Breakfast time", "contenido": "El desayuno se sirve todos los días de 06:30 a 10:00.\nEl desayuno se sirve en Restaurante Corozo & Timbal.\nTambién podemos servirle el desayuno en su habitación si lo desea.\nPuede ver el menú del desayuno aquí."}, {"codigo": "12-02", "titulo": "Breakfast rates", "contenido": "El desayuno está abierto para huéspedes y visitantes:\n• Precio por adulto: 65000 COP\nEl desayuno está incluido en su tarifa.\nSi no se aloja, también es bienvenido. Solo avise al personal a su llegada.\nPuede ver el menú del desayuno aquí."}, {"codigo": "12-05", "titulo": "Breakfast menu", "contenido": "Ofrecemos un desayuno buffet abierto que cambia de día en día pero siempre encontrará una selección de:\n- Frutas frescas\n- Jugos\n- Bebidas calientes\n- Embutidos y quesos\n- Variedad de huevos\n- Variedad de panes\n- Guarniciones calientes"}, {"codigo": "12-06", "titulo": "Breakfast refundable", "contenido": "El desayuno no es reembolsable"}, {"codigo": "12-07", "titulo": "Special diet & allergy free breakfast", "contenido": "Podemos acomodar sus requerimientos dietarios. Por favor infórmenos en el momento del check-in."}, {"codigo": "13-01", "titulo": "Parking", "contenido": "Lo sentimos, no tenemos parking.\nDesafortunadamente no disponemos de servicio de aparcacoches.\nCoches eléctricos:\nNo tenemos estación de carga para vehículos eléctricos.\nParking de bicis:\nNo disponemos de aparcamiento para bicicletas en la propiedad."}, {"codigo": "13-06", "titulo": "Room service", "contenido": "El servicio de habitaciones está disponible desde las 06:00 hasta las 23:00.\nMarque 100 en el teléfono de su habitación para hacer su pedido.\nPuede ver nuestro menú."}, {"codigo": "13-11", "titulo": "Wifi & Internet", "contenido": "La propiedad dispone de Wifi.\n• Wifi estándar: Gratis.\n• No hay internet de alta velocidad disponible.\n• Permitido para un número ilimitado de dispositivos.\n• La red es segura.\n• Las áreas de piscina y playa no tienen cobertura Wifi.\n• No hay conexión Ethernet.\n• Red 4G y 5G también disponibles.\n• Móviles complementarios no disponibles.\nPuede conectarse a la red Wi-Fi siguiendo las instrucciones de la tarjeta de su habitación."}, {"codigo": "13-13", "titulo": "Activities", "contenido": "Para obtener información turística comunicarse con recepción:\nTeléfono: +57 350 7293732\nCorreo: recepcion.arsenal@ghlhoteles.com"}, {"codigo": "13-15", "titulo": "Rentals", "contenido": "Aquí están todos los artículos disponibles para alquilar:"}, {"codigo": "13-17", "titulo": "Special requests", "contenido": "Podemos atender peticiones especiales\nEstán disponibles los siguientes artículos:\n- Decoración\n- Noche de bodas\n- Globos\n- Pétalos de rosa\n- Flores\n- Vino\n- Tarta de cumpleaños"}, {"codigo": "13-18", "titulo": "Special request reservation", "contenido": "Para hacer una reserva con petición especial, por favor, envíe un correo electrónico a recepcion.arsenal@ghlhoteles.com con la siguiente información:\n• Fecha deseada\n• Petición especial (explica en pocas palabras tus necesidades)\n• Número de reserva o de alojamiento\n• Correo electrónico\n• Número de teléfono"}, {"codigo": "13-21", "titulo": "Kids", "contenido": "Los niños son bienvenidos.\nLos niños de hasta 2 años pueden alojarse gratis con sus padres.\nLa tarifa infantil que aplica para niños:\n•de entre 3 y 11 años (80000 COP/noche).\nLa tarifa para adultos se aplica a partir de los 12 años.\nNuestros precios para adultos y niños varían según la temporada. Solicite una simulación de precios para ver el mejor precio disponible para sus fechas.\nNo ofrecemos un club infantil.\nLo sentimos, no tenemos zona de diversión.\nLos niños menores de 18 años deben estar siempre acompañados de su familia o tutor legal.\nPor favor, mándenos un email para más detalles: reservas.arsenal@ghlhoteles.com."}, {"codigo": "13-25", "titulo": "Babies", "contenido": "Los bebés son bienvenidos.\nPodemos proporcionarle los siguientes equipamientos:\n• Cuna (gratis)"}, {"codigo": "13-32", "titulo": "Medical services", "contenido": "Podemos proporcionar un botiquín de primeros auxilios, póngase en contacto con la recepción para más detalles.\nPara atención médica profesional.\nNúmeros de emergencia nacionales:\n• Policía: 123\n• Fuego: 123\n• Ambulancia: 123\nEncontrar a un especialista:\nLocalice a un médico a través de:\n• App Web: Enlace\n• Apple Store: Enlace\n• Play Store: Enlace"}, {"codigo": "13-41", "titulo": "Concierge", "contenido": "Conserjería:\n• Disponible: 24/7.\n• miembro Clefs d'Or: No.\n• Para más información: Enlace."}, {"codigo": "13-42", "titulo": "Lost & found", "contenido": "Para informar de un artículo perdido, por favor contáctanos directamente:\nCorreo: recepcion.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831\nPara más información, haga clic AQUÍ."}, {"codigo": "13-43", "titulo": "Laundry", "contenido": "Ofrecemos servicio de lavandería:\n• Los objetos dados antes de las 10:00 se devuelven el mismo día antes de las 10:00."}, {"codigo": "13-45", "titulo": "Change & ATM", "contenido": "El cajero automático más cercano se encuentra en:\n• Distribute billets\n a 8b-76, Cl. 24 #8b-22, Cartagena de Indias, Bolívar\n A pie - 1 min -\nDirecciones"}, {"codigo": "13-46", "titulo": "Delivery", "contenido": "Aceptamos entregas para huéspedes hasta 10 KG. Asegúrese de que la dirección de entregas es:\nCl. 24 #8B-58, Getsemaní, Cartagena de Indias, Provincia de Cartagena, Bolívar, Colombia"}, {"codigo": "13-47", "titulo": "Invoice", "contenido": "Para solicitar una factura, por favor, envíe un correo electrónico a reservas.arsenal@ghlhoteles.com con la siguiente información:\n• Número de reserva o alojamiento (si lo tiene)\n• Correo electrónico\n• Número de teléfono"}, {"codigo": "13-48", "titulo": "Currencies", "contenido": "Las tarifas de alojamiento en línea se muestran en USD, EUR, COP.\nPara cambiar de divisa, entre en nuestra herramienta de reservas y busque el selector de divisas (normalmente en la zona superior derecha de la página).\nEn la propiedad, aceptamos pagos en COP.\nLas facturas están disponibles en COP."}, {"codigo": "13-50", "titulo": "Airport & train station public transport", "contenido": "Las opciones de transporte público son:\nAeropuertos\n• Aeropuerto Internacional Rafael Núñez (CTG), 7 km/5 mi, indicaciones aquí"}, {"codigo": "13-51", "titulo": "Private transfer", "contenido": "Brindamos servicio de transfer como adicional, se debe coordinar con 48 horas de anticipación comunicándose con recepción:\nTeléfono: +57 605 6605831\nCelular: +57 350 7293732\nCorreo: recepcion.arsenal@ghlhoteles.com\nTransfer Diurnos de 7am a 8pm COP$90.000\nTransfer Nocturno de 9pm a 6am COP$108.000. Precio por trayecto máximo para 2 personas. Para más información contactarse con el hotel"}, {"codigo": "13-53", "titulo": "Taxi", "contenido": "Le puedo facilitar algunos precios y tiempos aproximados de taxi\n• Aeropuerto 15000 COP, 17min."}, {"codigo": "13-54", "titulo": "Taxi reservation", "contenido": "Para reservar un taxi, por favor, envíe un correo electrónico a recepcion.arsenal@ghlhoteles.com con la siguiente información:\n• Número de teléfono\n• Correo electrónico\n• Fecha\n• Destino\n• Dirección de recogida"}, {"codigo": "13-55", "titulo": "Shuttle", "contenido": "No ofrecemos servicios de traslado."}, {"codigo": "13-61", "titulo": "Flight, hotel packages, airlines & airports", "contenido": "Contamos con paquetes de vuelo + hotel para hoteles en Colombia y Perú, sujeto a disponibilidad de cada hotel, para mayor información, click aquí: aquí"}, {"codigo": "13-71", "titulo": "Coworking space", "contenido": "Información detallada: aquí"}, {"codigo": "13-75", "titulo": "Animation & entertainment", "contenido": "No tenemos un programa de entretenimiento."}, {"codigo": "13-80", "titulo": "Website & App", "contenido": "Nuestro sitio web está disponible en varios idiomas\n• English: Click here\n• Español: Haga clic aquí\nNuestra aplicación móvil está disponible en las siguientes plataformas\n• App Web: Haga clic aquí\n• Apple Store: Haga clic aquí\n• Play Store: Haga clic aquí\nTenga en cuenta que actualmente no tenemos página web ni aplicación móvil de multipropiedad."}, {"codigo": "13-90", "titulo": "Sister properties access", "contenido": "Los huéspedes de un resort no tienen acceso a otros resorts."}, {"codigo": "14-01", "titulo": "Accommodation", "contenido": "Tenemos 71 habitaciones.\n(Tipos de habitación para un máximo de personas)\n\nHabitación Estandar: 32 habitaciones\n• Superficie: de 19 a 19 m²\n• Ocupación máxima por habitación: 2 adultos y 1 niños\n• Composición: 1 habitaciones\nNo se permite fumar en las habitaciones\n\nHabitación Superior: 25 habitaciones\n• Superficie: de 21 a 21 m²\n• Ocupación máxima por habitación: 2 adultos y 1 niños\n• Composición: 1 habitaciones\nNo se permite fumar en las habitaciones\n\nHabitación Luxury Street View: 10 habitaciones\n• Superficie: de 24 a 24 m²\n• Ocupación máxima por habitación: 2 adultos y 1 niños\n• Composición: 1 habitaciones\nNo se permite fumar en las habitaciones\n\nHabitación Luxury Bay View: 4 habitaciones\n• Superficie: de 24 a 24 m²\n• Ocupación máxima por habitación: 2 adultos y 1 niños\n• Composición: 1 habitaciones\nNo se permite fumar en las habitaciones"}, {"codigo": "14-02", "titulo": "Connecting & close accommodation", "contenido": "Tenemos habitaciones conectadas disponibles para algunos de los tipos de habitación siguientes:\n• Standard Room\n• Superior Room\nNo disponible para:\n• Street View Luxury Room\n• Luxury Bay View Room\n\nPara solicitar una habitación concreta:\nSi aún no ha reservado: indique su petición en el apartado «comentarios» al hacer la reserva.\nSi ya ha reservado, consulte el procedimiento a continuación:\nPara hacer una solicitud especial, por favor contáctanos directamente:\nCorreo electrónico: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "14-03", "titulo": "Family accommodation", "contenido": "Nuestras habitaciones pueden alojar hasta 2 personas por habitación.\nSi hay más personas, podemos asegurarnos de que tengan habitaciones contiguas o conectadas"}, {"codigo": "14-04", "titulo": "Smoking", "contenido": "• No se permite fumar en ninguna parte del hotel; esto incluye productos de tabaco, cigarrillos electrónicos, puros, shisha y cualquier otro artículo que produzca humo o vapor\n• Se permite fumar en el exterior, delante del establecimiento\n• Las habitaciones no están equipadas con detectores de humo\n• La tarifa por limpieza de humo es de 0 COP\n\nPara solicitar una habitación concreta:\nSi aún no ha reservado: indique su petición en el apartado «comentarios» al hacer la reserva.\nSi ya ha reservado, consulte el procedimiento a continuación:\nPara hacer una solicitud especial, por favor contáctanos directamente:\nCorreo electrónico: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "15-06", "titulo": "Bathroom equipment", "contenido": "Todos nuestros baños están equipados con:\nSecador, toallas, albornoz, jabón, gel de ducha, champú, acondicionador, kit de afeitar y toallas de piscina\nA petición:\n• Gratis:\nCepillo de dientes y cepillo para el pelo\nNo disponible:\nPantuflas, hisopos de algodón, pasta de dientes, gorro de ducha, espejo de aumento, bidet y toallas de playa"}, {"codigo": "15-09", "titulo": "Shower, bathtub, jacuzzi, pool", "contenido": "Todas las habitaciones tienen ducha."}, {"codigo": "15-23", "titulo": "Extra bed", "contenido": "Sí, con mucho gusto le podemos agregar una cama extra gratuitamente."}, {"codigo": "15-26", "titulo": "Twin beds", "contenido": "Las habitaciones que ofrecen camas individuales son las Habitación Superior.\n\nPara solicitar una habitación concreta:\nSi aún no ha reservado: indique su petición en el apartado «comentarios» al hacer la reserva.\nSi ya ha reservado, consulte el procedimiento a continuación:\nPara hacer una solicitud especial, por favor contáctanos directamente:\nCorreo electrónico: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "15-35", "titulo": "Iron and ironing board", "contenido": "Disponible en la habitación: Plancha y tabla de planchar.\nNo disponible: Vaporizador para ropa."}, {"codigo": "15-46", "titulo": "Safe", "contenido": "Para garantizar la máxima seguridad de sus efectos personales, encontrará una caja fuerte en cada habitación"}, {"codigo": "15-48", "titulo": "Electrical & mobile phone facilities", "contenido": "Configuración eléctrica: 220-240V\nEnchufe digital en la habitación:\n• USB: Sí\n• USB C: Sí\n• Adaptadores eléctricos: disponible gratuitamente\n• Cargador de móvil: disponible gratuitamente"}, {"codigo": "15-61", "titulo": "Balcony & windows", "contenido": "Las ventanas de las habitaciones no se pueden abrir por razones de seguridad.\nAlgunas habitaciones tienen balcón, detalles a continuación:\nHabitación Estandar:\nBalcón no disponible.\nHabitación Superior:\nBalcón no disponible.\nHabitación Luxury Street View:\nAlgunas habitaciones tienen balcón.\nHabitación Luxury Bay View:\nAlgunas habitaciones tienen balcón.\n\nPara solicitar una habitación concreta:\nSi aún no ha reservado: indique su petición en el apartado «comentarios» al hacer la reserva.\nSi ya ha reservado, consulte el procedimiento a continuación:\nPara hacer una solicitud especial, por favor contáctanos directamente:\nCorreo electrónico: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "15-62", "titulo": "View", "contenido": "Todas las habitaciones ofrecen las mismas vistas, entre las que se incluyen:\n• Vista de la bahía (parcial)\n• Vista del mar (parcial)\nPara más información, haga clic AQUÍ.\n\nPara solicitar una habitación concreta:\nSi aún no ha reservado: indique su petición en el apartado «comentarios» al hacer la reserva.\nSi ya ha reservado, consulte el procedimiento a continuación:\nPara hacer una solicitud especial, por favor contáctanos directamente:\nCorreo electrónico: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "15-63", "titulo": "Soundproof and Blackout accommodation", "contenido": "El hotel está ubicado en una zona tranquila.\nPara asegurar un ambiente tranquilo durante su estancia, el hotel dispone de:\n• Paredes gruesas\n• Aire acondicionado silencioso\nSi prefiere un piso más alto:\n• Pisos superiores (Street View Luxury Room y Luxury Bay View Room)"}, {"codigo": "15-81", "titulo": "TV", "contenido": "Todas las habitaciones cuentan con TV, la guía de canales la encontrará en la habitación."}, {"codigo": "15-99", "titulo": "Specific room request", "contenido": "Para solicitar una habitación concreta:\nSi aún no ha reservado: indique su petición en el apartado «comentarios» al hacer la reserva\nSi ya ha reservado: consulte el procedimiento a continuación:\nPara hacer una solicitud especial, por favor contáctanos directamente:\nCorreo electrónico: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "16-01", "titulo": "Pictures & brochure", "contenido": "Para ver fotos del establecimiento, haga clic en este ENLACE."}, {"codigo": "16-03", "titulo": "Service request & complaint", "contenido": "Para hacer una solicitud especial, por favor contáctanos directamente:\nCorreo: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "16-06", "titulo": "Jobs & internships", "contenido": "Para cualquier solicitud de empleo o prácticas, por favor consulte aquí.\nPara cualquier solicitud adicional, póngase en contacto con el Departamento de Recursos Humanos\nEmail: karen.vergara@ghlhoteles.com\nTel: +57 605 6605831"}, {"codigo": "16-08", "titulo": "Languages spoken by the staff", "contenido": "Nuestro equipo habla Inglés y Español."}, {"codigo": "16-10", "titulo": "Pets", "contenido": "En el hotel no se admiten mascotas (ni siquiera se aceptan animales de apoyo emocional certificados ni animales de servicio/asistencia)"}, {"codigo": "16-11", "titulo": "Environment, health & safety (EHS)", "contenido": "Como cadena hotelera, nuestra responsabilidad es trabajar para prevenir, controlar y reducir los riesgos en nuestras instalaciones, cumpliendo con las normativas actuales de salud y seguridad. Hoy en día, priorizamos la salud de nuestros huéspedes y miembros del equipo ofreciendo servicios bajo altos estándares de calidad, bioseguridad e higiene.\nPara más información, haga clic AQUÍ."}, {"codigo": "16-12", "titulo": "Maps, plans & layouts", "contenido": "No tengo información sobre el mapa/disposición del hotel ni sobre los planos de las plantas."}, {"codigo": "16-15", "titulo": "Social & photoshoot", "contenido": "Para más información, por favor contacte con nuestro departamento de marketing: joao.oliveros@ghlhoteles.com"}, {"codigo": "16-17", "titulo": "Instant messaging & social networks", "contenido": "Puede encontrarnos en las siguientes plataformas:\n• Instagram: Haga clic aquí\n• Facebook: Haga clic aquí\n• WhatsApp: Haga clic aquí"}, {"codigo": "16-18", "titulo": "Reviews", "contenido": "Le animamos a que lea las reseñas de nuestros clientes aquí.\nLe animamos a que comparta su opinión aquí."}, {"codigo": "16-25", "titulo": "Tips policy", "contenido": "El restaurante sugiere una propina del 10% sobre la cuenta total, que puede ser aceptada, rechazada o ajustada según tu satisfacción. Por favor, indique su decisión al solicitar el proyecto de ley. El cien por cien de la propina se distribuye entre el personal de Alimentación y Bebidas. Para quejas, contacte con Línea Ex +57 (601) 651 3240 o SIC +57 (601) 592 0400."}, {"codigo": "16-42", "titulo": "LGBTQA+", "contenido": "Nuestra propiedad se asegura de que todo el mundo se sienta bienvenido, independientemente de su estado civil y de la inclusión del colectivo LGBTQA+."}, {"codigo": "16-43", "titulo": "Visitors policy", "contenido": "Los visitantes son bienvenidos pero sólo con invitación."}, {"codigo": "16-44", "titulo": "Alcohol policy", "contenido": "Está prohibido consumir alcohol en las habitaciones y zonas comunes, excepto en el restaurante."}, {"codigo": "16-45", "titulo": "Naturism", "contenido": "El naturismo no está permitido en nuestras instalaciones. Agradecemos tu comprensión y estamos disponibles para ayudarte con cualquier otra pregunta o solicitud."}, {"codigo": "17-01", "titulo": "Bar", "contenido": "Eche un vistazo a los detalles de nuestro bar a continuación\n\nPool Bar:\n• Bar de la piscina\n• Fumar no permitido/ Silla de ruedas accesible\n• Abierto 7/7\n• Abierto de 08:00 a 21:00\n• Abierto al público\n• No se aceptan mascotas en el bar\n• Se sirve comida\n• Sin restricción de edad\n• Entretenimiento en vivo: Gratis\n• No se requiere código de vestimenta\n• Servicios gratuitos: TV, Entretenimiento en vivo, Piscina, Tumbona de playa y Paraguas\n• Sin happy hour\n- Haga clic aquí para más detalles"}, {"codigo": "17-09", "titulo": "Towels service", "contenido": "Disponible de manera gratuita:\n• Toallas de baño\nse cambian cada día"}, {"codigo": "17-10", "titulo": "Spa", "contenido": "Contamos con una sala de terapias para parejas con un menú de tratamientos realizados por manos profesionales."}, {"codigo": "17-15", "titulo": "Spa hours", "contenido": "• Spa 1\nSin límite de tiempo\nAbierto todo el año\nAbierto todos los días\nHoras: 09:00 - 20:00\nNo hay horarios específicos de spa para clientes, ni horarios sólo para mujeres o niños."}, {"codigo": "17-31", "titulo": "Fitness gym", "contenido": "Sí, tenemos un gimnasio.\n- Abierto todos los días\n- Abierto todo el día: 24/24\n- Edad mínima 12 año(s)\n- Las personas menores de 18 años deben ir siempre acompañadas por un adulto\n- Sin límite de tiempo\nEl acceso es gratuito para los clientes del hotel\n- No se admiten mascotas en esta zona\n- Nuestro gimnasio no está abierto a visitantes externos.\n- El gimnasio está equipado con:\n• Pesos libres\n• Máquina de remo\n• Bicicleta elíptica\n- Instalaciones disponibles en el gimnasio:\n• Duchas\n• Taquillas\n• Toallas"}, {"codigo": "17-34", "titulo": "Rooftop", "contenido": "Tenemos una terraza con vistas magníficas. Está abierta todo el año\nAbierto para clientes del hotel y visitantes.\nPara más detalles sobre nuestra azotea, por favor visite este enlace aquí"}, {"codigo": "17-41", "titulo": "Heating & cooling", "contenido": "Nuestro hotel está equipado con sistemas de regulación de temperatura para garantizar su comodidad."}, {"codigo": "17-43", "titulo": "Floor arrangement & elevator", "contenido": "Nuestro hotel tiene 4 pisos, hay un ascensor en cada piso y no es accesible para sillas de ruedas\nStandard Room: Cualquier piso\nSuperior Room: Cualquier piso\nStreet View Luxury Room: Pisos superiores\nLuxury Bay View Room: Pisos superiores\n\nPara solicitar una habitación concreta:\nSi aún no ha reservado: indique su petición en el apartado «comentarios» al hacer la reserva.\nSi ya ha reservado, consulte el procedimiento a continuación:\nPara hacer una solicitud especial, por favor contáctanos directamente:\nCorreo electrónico: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "17-44", "titulo": "Disabled guest", "contenido": "Desafortunadamente, no tenemos la infraestructura adecuada para acomodar personas con movilidad reducida.\nPara obtener más detalles sobre nuestras infraestructuras, contáctenos al correo electrónico: reservas.arsenal@ghlhoteles.com.\n\nPara solicitar una habitación concreta:\nSi aún no ha reservado: indique su petición en el apartado «comentarios» al hacer la reserva.\nSi ya ha reservado, consulte el procedimiento a continuación:\nPara hacer una solicitud especial, por favor contáctanos directamente:\nCorreo electrónico: reservas.arsenal@ghlhoteles.com\nTeléfono: +57 (605) 660 5831"}, {"codigo": "17-61", "titulo": "Swimming pool", "contenido": "Eche un vistazo a los detalles de nuestra piscina a continuación:\n•Swimming pool:\n- Exterior\n- Fumar no permitido\n- Silla de ruedas no accesible\n- Rampa/ascensor para sillas de ruedas no disponible\n- No se admiten mascotas en esta zona\n- Abierto todo el año\n- Sin restricción de edad\n- Tamaño: L: 11 M, A: 6 M, P: 160 M\n- El acceso es gratuito para los clientes del hotel\n-El acceso no es gratuito para los clientes del restaurante del hotel\n-Abierto al público: 30000 COP/día\n- Límite de tiempo: 5 hora(s)\n- Capacidad máxima: 35 personas\n- Tener una reserva no es obligatorio\n- Ducha: No\n- Agua de mar: No\n- Cloro: No\n- Gorro de baño: obligatorio\n- Inflables: no están permitidos\n- Chaleco salvavidas para niños: Sí"}, {"codigo": "17-62", "titulo": "Swimming pool hours", "contenido": "• Swimming pool\nAbierto todo el año\nAbierto todos los días\nHoras: 08:00 - 21:00"}, {"codigo": "17-91", "titulo": "Boutique", "contenido": "No disponemos de tienda en las instalaciones."}, {"codigo": "18-01", "titulo": "Restaurant", "contenido": "Definitivamente, GHL Hotel Arsenal Cartagena tiene un restaurante:\n\nRestaurante Corozo & Timbal Gastro Bar:\n• Latino, Cena informal\n• Abierto todo el año.\n• Gama de precios: $$\n• Abierto para clientes del hotel y visitantes.\n• Tener una reserva no es obligatorio.\n• Adecuado para niños.\n• No hay servicio de picnic disponible.\n• Capacidad máxima: 4 personas.\n• No se aceptan mascotas en el restaurante.\n• Nuestro restaurante ofrece:\n• Menú para niños\n• Tronas\n• No se requiere código de vestimenta\nMenú del restaurante Corozo & Timbal Gastro Bar\nLista de bebidas del restaurante Corozo & Timbal Gastro Bar\nSitio web del restaurante Corozo & Timbal Gastro Bar"}, {"codigo": "18-07", "titulo": "Special diet & allergy-free menu", "contenido": "Podemos acomodar sus requerimientos dietarios. Por favor infórmenos en el momento del check-in."}, {"codigo": "18-11", "titulo": "Brunch", "contenido": "No ofrecemos brunch"}, {"codigo": "18-21", "titulo": "Afternoon tea", "contenido": "No servimos merienda en nuestro hotel."}, {"codigo": "18-24", "titulo": "Christmas", "contenido": "El hotel está abierto en la temporada y realizamos eventos que pueden variar, contáctanos directamente para más información o visita nuestras secciones de ofertas y planes."}, {"codigo": "18-25", "titulo": "New Year's Eve", "contenido": "El hotel está abierto en la temporada y realizamos eventos que pueden variar, contáctanos directamente para más información o visita nuestras secciones de ofertas y planes."}, {"codigo": "18-26", "titulo": "Valentine's day", "contenido": "Para ver nuestra oferta de San Valentín haga clic en el siguiente enlace:\nOferta especial del hotel: Haga clic aquí."}, {"codigo": "19-03", "titulo": "City center", "contenido": "Nos encontramos a 1.0 km del centro de la ciudad.\n• Caminando, indicaciones aquí"}, {"codigo": "19-10", "titulo": "Public transport tickets & passes", "contenido": "Lamentamos no vender billetes de metro/autobús. Puede comprarlos en la estación de metro más cercana o directamente en el autobús"}, {"codigo": "19-30", "titulo": "Beaches", "contenido": "Nos encontramos a 32 km de la playa más cercana.\nLa playa es pública no está patrullada por socorristas.\nLos principales servicios disponibles son: sombrillas & actividades para niños.\nNo se admiten mascotas en esta zona.\nEsta es una zona segura para nadar.\nPlaya de boca grande\nCra. 1 #6-2 a 6-230\nEste lugar está a 1,452 km de la propiedad\nDirecciones"}, {"codigo": "20-01", "titulo": "Business meetings", "contenido": "Nuestros salones de eventos son ideales para acoger todo tipo de eventos corporativos y están completamente equipados para celebrar reuniones sociales como recepciones, bodas, comuniones y otros eventos familiares. Podemos ayudarte con la planificación. Por favor, contacta con nuestro equipo de eventos:\nCorreo: eventos.arsenal@ghlhoteles.com\nTeléfono: +57 316 0107654\n• Para más información, haga clic AQUÍ."}, {"codigo": "20-02", "titulo": "Business meeting reservation", "contenido": "Para reservar una sala de reuniones, por favor, envíe un correo electrónico a eventos.arsenal@ghlhoteles.com con la siguiente información:\n• Fecha\n• Número de días\n• Hora de inicio\n• Hora de finalización\n• Número de participantes\n• Número de salas de reuniones\n• Número de alojamiento (si es necesario)\n• Solicitudes especiales\n• Número de teléfono\n• Correo electrónico"}, {"codigo": "20-21", "titulo": "Celebration", "contenido": "En el hotel, organizamos una variedad de celebraciones a lo largo del año, incluyendo Navidad, Nochevieja y otros eventos especiales de temporada. Si buscas un espacio para celebrar con tu grupo, familia o empresa, podemos apoyarte en la planificación. Por favor, contacta con nuestro equipo de eventos:\nCorreo: eventos.arsenal@ghlhoteles.com\nTeléfono: +57 316 0107654\n•Para más información, haga clic AQUÍ."}, {"codigo": "20-22", "titulo": "Celebration reservation", "contenido": "Para organizar una celebración, por favor, envíe un correo electrónico a eventos.arsenal@ghlhoteles.com con la siguiente información:\n• Fecha\n• Nombre del evento\n• Número de participantes\n• Número de alojamiento (si es necesario)\n• Número de teléfono\n• Correo electrónico"}]}}</script>
+<script>
+const CHANNELS = [
+  {key:'chatbot', label:'Chatbot'},
+  {key:'web', label:'Página web'},
+  {key:'contactCenter', label:'Contact center'},
+  {key:'emailMarketing', label:'Email marketing'},
+  {key:'googleAds', label:'Google Ads'},
+  {key:'redes', label:'Redes sociales'},
+];
+
+const DIALOGOS_POR_HOTEL = JSON.parse(document.getElementById('dialogosData').textContent);
+const openDialogIds = new Set();
+
+function escapeHtml(s){
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function buildDialogTable(id, filterText){
+  const entry = DIALOGOS_POR_HOTEL[String(id)];
+  if(!entry || !entry.dialogos.length){
+    return '<div class="no-dialogos">Aún no se ha cargado el estado actual de diálogos para este hotel.</div>';
+  }
+  const q = (filterText || '').toLowerCase();
+  const rows = entry.dialogos.filter(d =>
+    !q || d.codigo.toLowerCase().includes(q) || d.titulo.toLowerCase().includes(q) || d.contenido.toLowerCase().includes(q)
+  );
+  if(!rows.length){
+    return '<div class="no-dialogos">Sin diálogos que coincidan con la búsqueda.</div>';
+  }
+  return `<div style="font-size:11px;color:var(--gray);margin-bottom:8px;">Corte: ${escapeHtml(entry.fechaCorte)} · ${entry.dialogos.length} diálogos activos</div>
+  <div class="dialog-scroll"><table class="mod-table">
+    <thead><tr><th>Código</th><th>Título</th><th>Contenido</th></tr></thead>
+    <tbody>${rows.map(d => `<tr>
+      <td class="codigo">${escapeHtml(d.codigo)}</td>
+      <td class="titulo">${escapeHtml(d.titulo)}</td>
+      <td class="contenido">${escapeHtml(d.contenido)}</td>
+    </tr>`).join('')}</tbody>
+  </table></div>`;
+}
+
+function renderDialogDetail(id){
+  const row = document.getElementById(`dialog-detail-${id}`);
+  if(!row) return;
+  const input = row.querySelector('.dialog-search');
+  row.querySelector('.dialog-table-slot').innerHTML = buildDialogTable(id, input ? input.value : '');
+}
+
+function toggleDialogRow(id){
+  const mainRow = document.querySelector(`tr.main-row[data-id="${id}"]`);
+  const detailRow = document.getElementById(`dialog-detail-${id}`);
+  if(openDialogIds.has(id)){
+    openDialogIds.delete(id);
+    mainRow.classList.remove('open');
+    detailRow.classList.remove('open');
+  } else {
+    openDialogIds.add(id);
+    mainRow.classList.add('open');
+    detailRow.classList.add('open');
+    renderDialogDetail(id);
+  }
+}
+
+const DATA = [
+  {id:1,hotel:"Arsenal",contacto:"Luis Saez",correo:"luis.saez@ghlhoteles.com",ciclo:"Jun-26",
+    modificaciones:"No",desc:"",comentarios:"",estado:"Sin respuesta",
+    canales:{chatbot:false,web:false,contactCenter:false,emailMarketing:false,googleAds:false,redes:false}},
+
+  {id:2,hotel:"GHL Lago Titicaca",contacto:"Milagros Velazco Reyes",correo:"milagros.velazco@ghlhoteles.com",ciclo:"Jun-26",
+    modificaciones:"No",desc:"Confirmó recibido — sin modificaciones",comentarios:"",estado:"Sin modificaciones",
+    canales:{chatbot:false,web:false,contactCenter:false,emailMarketing:false,googleAds:false,redes:false}},
+
+  {id:3,hotel:"Geotel Calama",contacto:"Katherine Mora",correo:"katherine.mora@ghlhoteles.com",ciclo:"Jun-26",
+    modificaciones:"Sí",desc:"8 diálogos modificados: contacto reservas/eventos, modificación/cancelación reserva, pagos, check-out, desayuno, parking",
+    comentarios:"",estado:"Pendiente actualización",
+    canales:{chatbot:false,web:false,contactCenter:false,emailMarketing:false,googleAds:false,redes:false}},
+
+  {id:4,hotel:"GHL Collection Hamilton",contacto:"Wilson Bohorquez",correo:"andres.bohorquez@ghlhoteles.com",ciclo:"Jun-26",
+    modificaciones:"Sí",desc:"6 diálogos modificados: early check-in, check-out tardío, desayuno, room service, transfer privado, quejas",
+    comentarios:"",estado:"Pendiente actualización",
+    canales:{chatbot:true,web:false,contactCenter:false,emailMarketing:false,googleAds:false,redes:false}},
+
+  {id:5,hotel:"Hotel Tequendama Bogotá",contacto:"Sara Judith Aguirre",correo:"sara.aguirre@ghlhoteles.com",ciclo:"Jun-26",
+    modificaciones:"Sí",
+    desc:"20 diálogos modificados: contacto reservas, check-out, equipaje, desayuno, parking, room service, niños, taxi, fumadores, empleos, mascotas, gimnasio, accesibilidad, restaurante",
+    comentarios:"2 correos el 10-jun",estado:"Pendiente actualización",
+    canales:{chatbot:true,web:true,contactCenter:false,emailMarketing:false,googleAds:false,redes:false}},
+
+  {id:6,hotel:"GHL Style Barrancabermeja",contacto:"Luis Martinez",correo:"luis.martinez@ghlhoteles.com",ciclo:"Jun-26",
+    modificaciones:"No",desc:"Confirmó recibido y comprensión del proceso (respuesta tardía)",
+    comentarios:"Respuesta tardía 13-jun",estado:"Sin modificaciones",
+    canales:{chatbot:false,web:false,contactCenter:false,emailMarketing:false,googleAds:false,redes:false}},
+
+  {id:7,hotel:"Park Lake Luxury",contacto:"—",correo:"reservas.parklake@ghlhoteles.com",ciclo:"Jun-26",
+    modificaciones:"No",desc:"",comentarios:"Sin nombre de contacto",estado:"Sin respuesta",
+    canales:{chatbot:false,web:false,contactCenter:false,emailMarketing:false,googleAds:false,redes:false}},
+
+  {id:8,hotel:"San Lazaro Art",contacto:"Keilis Mercado",correo:"keilis.mercado@ghlhoteles.com",ciclo:"Jun-26",
+    modificaciones:"Sí",desc:"Transfers diurno/nocturno y condiciones adicionales",comentarios:"",estado:"Pendiente actualización",
+    canales:{chatbot:false,web:false,contactCenter:false,emailMarketing:false,googleAds:false,redes:false}},
+
+  {id:9,hotel:"Sonesta Puno",contacto:"Delmy Nuñez",correo:"delmy.nunez@ghlhoteles.com",ciclo:"Jun-26",
+    modificaciones:"Sí",desc:"Tel. reservas, check-in 12m, tarifa niño adicional, otras",comentarios:"",estado:"Pendiente actualización",
+    canales:{chatbot:false,web:false,contactCenter:true,emailMarketing:false,googleAds:false,redes:false}},
+
+  {id:10,hotel:"GHL Montería",contacto:"Jose Medina",correo:"mauricio.medina@ghlhoteles.com",ciclo:"Jun-26",
+    modificaciones:"Sí",desc:"Errores en PDF + ajustes de gerencia",comentarios:"2 correos: 4-jun y 5-jun",estado:"Pendiente actualización",
+    canales:{chatbot:false,web:false,contactCenter:false,emailMarketing:false,googleAds:false,redes:false}},
+];
+
+const ESTADO_CLASS = {
+  "Actualizado":"actualizado",
+  "Pendiente actualización":"pendiente",
+  "Sin respuesta":"sin-respuesta",
+  "Sin modificaciones":"sin-mod",
+};
+
+let activeCiclo = "Todos";
+let sortKey = null;
+let sortAsc = true;
+
+const SORT_ICONS = ['hotel','contacto','ciclo','modificaciones','desc','canales','comentarios','estado'];
+
+function sortTable(key){
+  if(sortKey === key){ sortAsc = !sortAsc; } else { sortKey = key; sortAsc = true; }
+  SORT_ICONS.forEach(k=>{
+    const el = document.getElementById(`si-${k}`);
+    if(!el) return;
+    if(k === sortKey){ el.textContent = sortAsc ? '▲' : '▼'; el.classList.add('active'); }
+    else { el.textContent = '⇅'; el.classList.remove('active'); }
+  });
+  render();
+}
+
+function sortValue(h, key){
+  if(key === 'canales') return channelCount(h);
+  return (h[key] || '').toString().toLowerCase();
+}
+
+function channelCount(h){
+  return CHANNELS.filter(c => h.canales[c.key]).length;
+}
+
+function buildChannelColumn(h){
+  const n = channelCount(h);
+  const pct = Math.round((n / CHANNELS.length) * 100);
+  const items = CHANNELS.map(c => `
+    <label class="channel-item${h.canales[c.key]?' done':''}">
+      <input type="checkbox" ${h.canales[c.key]?'checked':''} onchange="setChannel(${h.id}, '${c.key}', this.checked)">
+      ${c.label}
+    </label>
+  `).join('');
+  return `
+    <div class="channel-progress-header">
+      <span class="channel-progress-pct">${pct}%</span>
+      <span class="channel-progress-count">${n}/${CHANNELS.length} canales</span>
+    </div>
+    <div class="channel-progress-track">
+      <div class="channel-progress-fill${pct===100?' full':''}" style="width:${pct}%"></div>
+    </div>
+    <div class="channel-grid-compact">${items}</div>
+  `;
+}
+
+function getCiclos(){
+  const set = new Set(DATA.map(d=>d.ciclo));
+  return ["Todos", ...Array.from(set).sort()];
+}
+
+function renderCicloTabs(){
+  const bar = document.getElementById('mesBar');
+  bar.innerHTML = getCiclos().map(c=>`
+    <div class="mes-tab${c==='Todos'?' mes-tab-all':''}${c===activeCiclo?' active':''}" onclick="setCiclo('${c}')">${c}</div>
+  `).join('');
+}
+
+function setCiclo(c){
+  activeCiclo = c;
+  renderCicloTabs();
+  applyFilters();
+}
+
+function cell(v){ return v ? v : '<span class="empty-cell">—</span>'; }
+
+function estadoOptions(current){
+  return Object.keys(ESTADO_CLASS).map(v=>`<option value="${v}"${v===current?' selected':''}>${v}</option>`).join('');
+}
+
+function findById(id){ return DATA.find(h=>h.id===id); }
+
+function render(){
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const mod = document.getElementById('filterMod').value;
+  const estado = document.getElementById('filterEstado').value;
+  const filtered = DATA.filter(h=>{
+    const matchCiclo = activeCiclo === "Todos" || h.ciclo === activeCiclo;
+    const matchQ = !q || [h.hotel,h.contacto,h.correo,h.desc,h.comentarios].some(f=>(f||'').toLowerCase().includes(q));
+    const matchMod = !mod || h.modificaciones === mod;
+    const matchEstado = !estado || h.estado === estado;
+    return matchCiclo && matchQ && matchMod && matchEstado;
+  });
+
+  if(sortKey){
+    filtered.sort((a,b)=>{
+      const va = sortValue(a, sortKey), vb = sortValue(b, sortKey);
+      const cmp = typeof va === 'number' ? va - vb : va.localeCompare(vb);
+      return sortAsc ? cmp : -cmp;
+    });
+  }
+
+  const tbody = document.getElementById('tableBody');
+  if(!filtered.length){
+    tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><div class="icon">🔍</div>Sin resultados para los filtros seleccionados.</div></td></tr>`;
+    document.getElementById('countLabel').textContent = '0 registros';
+    renderKPIs([]);
+    updateHeader([]);
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(h => `
+    <tr class="main-row${openDialogIds.has(h.id)?' open':''}" data-id="${h.id}" onclick="toggleDialogRow(${h.id})">
+      <td class="center" onclick="event.stopPropagation()"><span class="chev" onclick="toggleDialogRow(${h.id})">▶</span></td>
+      <td class="hotel">${h.hotel}</td>
+      <td class="contact">${h.contacto}<br><span class="email">${h.correo}</span></td>
+      <td class="center"><span class="mes-chip">${h.ciclo}</span></td>
+      <td onclick="event.stopPropagation()">
+        <select class="mod-select ${h.modificaciones==='Sí'?'mod-si':'mod-no'}" aria-label="¿Modificaciones? — ${h.hotel}" onchange="setModificaciones(${h.id}, this.value)">
+          <option value="Sí"${h.modificaciones==='Sí'?' selected':''}>✓ Sí</option>
+          <option value="No"${h.modificaciones==='No'?' selected':''}>No</option>
+        </select>
+      </td>
+      <td class="desc">${cell(h.desc)}</td>
+      <td class="channel-col" onclick="event.stopPropagation()">${buildChannelColumn(h)}</td>
+      <td class="comment">${cell(h.comentarios)}</td>
+      <td onclick="event.stopPropagation()">
+        <select class="estado-select ${ESTADO_CLASS[h.estado]}" aria-label="Estado — ${h.hotel}" onchange="setEstado(${h.id}, this.value)">
+          ${estadoOptions(h.estado)}
+        </select>
+      </td>
+    </tr>
+    <tr class="dialog-detail-row${openDialogIds.has(h.id)?' open':''}" id="dialog-detail-${h.id}">
+      <td colspan="9">
+        <div class="detail-inner" onclick="event.stopPropagation()">
+          <h4>Diálogos activos — ${h.hotel}</h4>
+          <input type="text" class="dialog-search" placeholder="Buscar código, título o contenido dentro de este hotel…" oninput="renderDialogDetail(${h.id})">
+          <div class="dialog-table-slot">${openDialogIds.has(h.id) ? buildDialogTable(h.id, '') : ''}</div>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+
+  document.getElementById('countLabel').textContent = `${filtered.length} registro${filtered.length!==1?'s':''} ${activeCiclo!=='Todos'?'· '+activeCiclo:'· todos los ciclos'}`;
+  renderKPIs(filtered);
+  updateHeader(filtered);
+}
+
+function setModificaciones(id, value){ findById(id).modificaciones = value; render(); }
+function setEstado(id, value){ findById(id).estado = value; render(); }
+function setChannel(id, key, checked){ findById(id).canales[key] = checked; render(); }
+
+function renderKPIs(data){
+  const total = data.length;
+  const conMod = data.filter(h=>h.modificaciones === 'Sí').length;
+  const actualizados = data.filter(h=>h.estado === 'Actualizado').length;
+  document.getElementById('kpiRow').innerHTML = `
+    <div class="kpi"><div class="num">${total}</div><div class="lbl">Propiedades en vista</div></div>
+    <div class="kpi"><div class="num" style="color:#2a5e95">${conMod}</div><div class="lbl">Con modificaciones</div></div>
+    <div class="kpi"><div class="num" style="color:#856404">${actualizados}</div><div class="lbl">Actualizados en canales</div></div>
+  `;
+}
+
+function updateHeader(data){
+  const ciclos = getCiclos().length - 1;
+  document.getElementById('headerBadge').textContent =
+    activeCiclo === 'Todos' ? `${ciclos} ciclo${ciclos!==1?'s':''} · ${DATA.length} hoteles`
+                             : `${activeCiclo} · ${data.length} propiedades`;
+}
+
+function applyFilters(){ render(); }
+
+renderCicloTabs();
+render();
+</script>
