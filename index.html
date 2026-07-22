@@ -27,6 +27,7 @@
   .mes-tab:hover{color:var(--white);}
   .mes-tab.active{color:var(--white);border-bottom-color:var(--blue);}
   .mes-tab-all{border-right:1px solid rgba(255,255,255,.2);margin-right:4px;}
+  .dir-tab-row{background:var(--navy);padding:6px 32px;display:flex;align-items:center;overflow-x:auto;}
 
   /* KPIs */
   .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 32px 0;}
@@ -132,7 +133,7 @@
   .channel-item.done{color:var(--navy);font-weight:600;}
 
   /* Tab llamativa: Directorio de Contactos */
-  .mes-tab-dir{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--navy);font-weight:700;border-radius:8px;margin:6px 0 6px 14px;padding:8px 16px;border-bottom:none!important;box-shadow:0 2px 8px rgba(212,168,67,.45);white-space:nowrap;}
+  .mes-tab-dir{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--navy);font-weight:700;border-radius:8px;margin:4px 0;padding:8px 16px;border-bottom:none!important;box-shadow:0 2px 8px rgba(212,168,67,.45);white-space:nowrap;}
   .mes-tab-dir:hover{filter:brightness(1.06);}
   .mes-tab-dir.active{outline:2px solid var(--white);outline-offset:-4px;}
   .dir-badge{background:rgba(2,56,89,.18);border-radius:10px;padding:1px 7px;font-size:10px;margin-left:6px;}
@@ -206,6 +207,7 @@
 </div>
 
 <div class="mes-bar" id="mesBar"></div>
+<div class="dir-tab-row" id="dirTabRow"></div>
 
 <div class="kpi-row" id="kpiRow"></div>
 
@@ -1705,7 +1707,8 @@ function renderCicloTabs(){
   const bar = document.getElementById('mesBar');
   bar.innerHTML = getCiclos().map(c=>`
     <div class="mes-tab${c==='Todos'?' mes-tab-all':''}${(!dirActive && c===activeCiclo)?' active':''}" onclick="setCiclo('${c}')">${c}</div>
-  `).join('') + `
+  `).join('');
+  document.getElementById('dirTabRow').innerHTML = `
     <div class="mes-tab-dir${dirActive?' active':''}" onclick="showDirectorio()">📇 Directorio de Contactos<span class="dir-badge">63</span></div>
   `;
 }
