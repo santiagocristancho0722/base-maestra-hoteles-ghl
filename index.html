@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
 <title>Base Maestra — Hoteles GHL</title>
 <style>
   :root {
@@ -155,6 +157,9 @@
   #directorioView .toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin:18px 32px 18px;}
   #directorioView .toolbar h2{font-size:16px;color:var(--navy);margin:0;font-weight:700;}
   #directorioView .count-pill{font-size:12.5px;color:var(--gray);font-weight:600;}
+  #directorioView .toolbar-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  #directorioView .dir-download-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--navy) 0%,var(--mid) 100%);color:var(--white);border:none;border-radius:8px;padding:9px 14px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:0 1px 4px rgba(2,56,89,.3);white-space:nowrap;transition:filter .15s;}
+  #directorioView .dir-download-btn:hover{filter:brightness(1.15);}
   #directorioView .search-box{position:relative;}
   #directorioView .search-box input{width:300px;max-width:100%;padding:9px 14px 9px 34px;border:1px solid var(--lgray);border-radius:8px;font-size:13px;font-family:inherit;color:#1a2733;
     background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23808080' stroke-width='2'%3E%3Ccircle cx='7' cy='7' r='5.2'/%3E%3Cpath d='M11 11l3.3 3.3'/%3E%3C/svg%3E") no-repeat 10px center;}
@@ -270,7 +275,10 @@
 
   <div class="toolbar">
     <div><h2 style="display:inline; margin-right:10px;">Hoteles</h2><span class="count-pill" id="dir-count-pill"></span></div>
-    <div class="search-box"><input type="text" id="dir-search" placeholder="Buscar hotel..."></div>
+    <div class="toolbar-actions">
+      <button type="button" class="dir-download-btn" onclick="descargarDirectorioExcel()" title="Descargar toda la información del directorio en Excel">📥 Descargar Excel</button>
+      <div class="search-box"><input type="text" id="dir-search" placeholder="Buscar hotel..."></div>
+    </div>
   </div>
 
   <div id="dir-hotel-list" class="hotel-list-wrap">
@@ -1946,6 +1954,49 @@ render();
     });
   }
   document.getElementById('dir-search').addEventListener('input',e=>{ dirState.term=e.target.value.trim().toLowerCase(); dirApply(); });
+
+  function dirEsc(s){
+    return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function dirRoleText(block){
+    const parts = [];
+    block.querySelectorAll('.entry').forEach(entry=>{
+      const person = entry.querySelector('.person')?.textContent.trim() || '';
+      const flds = Array.from(entry.querySelectorAll(':scope > .fld')).map(f=>{
+        const l = f.querySelector('.fld-l')?.textContent.trim() || '';
+        const v = f.querySelector('.fld-v')?.textContent.trim() || '';
+        return v ? `${l}: ${v}` : '';
+      }).filter(Boolean);
+      parts.push([person, ...flds].filter(Boolean).join(' — '));
+    });
+    return parts.join(' | ');
+  }
+
+  window.descargarDirectorioExcel = function(){
+    const headers = ['Hotel','País','Ciudad','Gerente General','Gerente de Mercadeo y Ventas','Aseguramiento de Calidad','Revenue Manager','Community Manager'];
+    const roleSelectors = ['.role-block.r-gg','.role-block.r-gmv','.role-block.r-cal','.role-block.r-rev','.role-block.r-cm'];
+    let html = '<table border="1"><thead><tr>' + headers.map(h=>`<th>${dirEsc(h)}</th>`).join('') + '</tr></thead><tbody>';
+    dirCards.forEach(card=>{
+      const hotel = card.querySelector('.hotel-name')?.textContent.trim() || '';
+      const pais = card.dataset.pais || '';
+      const ciudad = card.dataset.ciudad || '';
+      const roles = roleSelectors.map(sel => dirRoleText(card.querySelector(sel) || document.createElement('div')));
+      const cells = [hotel, pais, ciudad, ...roles];
+      html += '<tr>' + cells.map(v=>`<td>${dirEsc(v)}</td>`).join('') + '</tr>';
+    });
+    html += '</tbody></table>';
+    const doc = `<html><head><meta charset="UTF-8"></head><body>${html}</body></html>`;
+    const blob = new Blob(['﻿' + doc], {type:'application/vnd.ms-excel;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'directorio_contactos_ghl.xls';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   dirBuildPais(); dirApply();
 })();
