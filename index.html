@@ -21,7 +21,13 @@
   .site-header h1{color:var(--white);font-size:30px;font-weight:800;letter-spacing:-.01em;line-height:1.15;}
   .site-header .sub{color:var(--blue);font-size:12.5px;margin-top:6px;}
   .header-right{display:flex;align-items:center;gap:10px;}
-  .header-badge{background:var(--mid);color:var(--white);border-radius:6px;padding:6px 14px;font-size:11px;font-weight:600;white-space:nowrap;}
+  .update-badge{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:9px 15px;}
+  .update-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#9fc0da;margin-bottom:2px;}
+  .update-value{font-size:13.5px;font-weight:700;color:var(--white);line-height:1;}
+  .pulse-dot{position:relative;flex:none;width:11px;height:11px;border-radius:50%;background:#35d07f;box-shadow:0 0 6px rgba(53,208,127,.9);}
+  .pulse-dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid #35d07f;opacity:.7;animation:pulse-ring 1.8s ease-out infinite;}
+  @keyframes pulse-ring{0%{transform:scale(.7);opacity:.7;}70%{transform:scale(1.7);opacity:0;}100%{transform:scale(1.7);opacity:0;}}
+  @media (prefers-reduced-motion:reduce){.pulse-dot::after{animation:none;opacity:0;}}
 
   /* Ciclo tabs */
   .mes-bar{background:var(--mid);padding:0 32px;display:flex;align-items:center;gap:0;overflow-x:auto;}
@@ -236,7 +242,13 @@
     <div class="sub">Agencia Digital GHL &nbsp;|&nbsp; Consolidado por hotel · vista de consulta para todas las áreas</div>
   </div>
   <div class="header-right">
-    <div class="header-badge" id="headerBadge">—</div>
+    <div class="update-badge" title="Este sitio se actualiza con frecuencia">
+      <span class="pulse-dot"></span>
+      <div class="update-text">
+        <div class="update-label">Última actualización</div>
+        <div class="update-value">23/07/2026</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1975,10 +1987,7 @@ function renderKPIs(data){
 }
 
 function updateHeader(data){
-  const ciclos = getCiclos().length - 1;
-  document.getElementById('headerBadge').textContent =
-    activeCiclo === 'Todos' ? `${ciclos} ciclo${ciclos!==1?'s':''} · ${DATA.length} hoteles`
-                             : `${activeCiclo} · ${data.length} propiedades`;
+  // el badge del encabezado ahora es estático (última actualización + indicador activo)
 }
 
 function applyFilters(){ render(); }
