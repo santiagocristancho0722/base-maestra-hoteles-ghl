@@ -1842,8 +1842,8 @@ function renderCicloTabs(){
     <div class="mes-tab${c==='Todos'?' mes-tab-all':''}${(!dirActive && c===activeCiclo)?' active':''}" onclick="setCiclo('${c}')">${c}</div>
   `).join('');
   document.getElementById('dirTabRow').innerHTML = `
-    <div class="mes-tab-dir${dirActive==='directorio'?' active':''}" onclick="showDirectorio()">📇 Directorio de Contactos<span class="dir-badge">63</span></div>
     <div class="mes-tab-dir${dirActive==='infoGeneral'?' active':''}" onclick="showInfoGeneral()">🏨 Información General<span class="dir-badge">68</span></div>
+    <div class="mes-tab-dir${dirActive==='directorio'?' active':''}" onclick="showDirectorio()">📇 Directorio de Contactos<span class="dir-badge">63</span></div>
   `;
 }
 
