@@ -222,6 +222,7 @@
   table.ig-table tr.hidden{display:none;}
   td.ig-hotel{font-weight:700;color:var(--navy);white-space:nowrap;}
   td.ig-num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .ig-stars{font-size:13px;letter-spacing:1px;white-space:nowrap;}
   td.ig-dir{min-width:220px;line-height:1.4;}
   .ig-brand-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:#eef3f9;color:var(--navy);white-space:nowrap;}
   .ig-web-links{display:flex;gap:6px;flex-wrap:wrap;}
@@ -2112,6 +2113,10 @@ render();
     return `<div class="ig-web-links">${r.web.map(w=>`<a href="${igEsc(w.url)}" target="_blank" rel="noopener">${igEsc(w.idioma)}</a>`).join('')}</div>`;
   }
 
+  function igStars(r){
+    return `<span class="ig-stars" title="${igEsc(r.estrellasLabel)}">${'⭐'.repeat(r.estrellas)}</span>`;
+  }
+
   function igRowHtml(r){
     return `<tr data-pais="${igEsc(r.pais)}" data-ciudad="${igEsc(r.ciudad)}" data-name="${igEsc((r.hotel+' '+r.brand+' '+r.brandStyle+' '+r.ciudad).toLowerCase())}">
       <td class="ig-hotel">${igEsc(r.hotel)}</td>
@@ -2121,7 +2126,7 @@ render();
       <td>${igEsc(r.ciudad)}</td>
       <td>${igEsc(r.do)}</td>
       <td class="ig-dir">${igEsc(r.direccion)}</td>
-      <td class="ig-num">${igEsc(r.estrellasLabel)}</td>
+      <td class="ig-num">${igStars(r)}</td>
       <td class="ig-num">${r.llaves}</td>
       <td>${igEsc(r.categoria)}</td>
       <td>${igEsc(r.tipo)}</td>
