@@ -234,6 +234,18 @@
   .ig-web-links{display:flex;gap:6px;flex-wrap:wrap;}
   .ig-web-links a{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;background:var(--navy);color:var(--white);text-decoration:none;}
   .ig-web-links a:hover{background:var(--mid);}
+  th.ig-th-filterable{position:relative;}
+  .ig-filter-btn{display:inline-block;margin-left:5px;padding:0 3px;font-size:10px;opacity:.7;cursor:pointer;border-radius:3px;}
+  .ig-filter-btn:hover{background:rgba(255,255,255,.2);}
+  .ig-filter-btn.active{opacity:1;color:var(--gold,#d4a843);font-weight:700;}
+  .ig-filter-menu{display:none;position:absolute;top:100%;left:0;z-index:5;background:var(--white);color:#1a2733;border:1px solid var(--lgray);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.15);padding:8px;min-width:180px;max-height:260px;overflow-y:auto;font-weight:400;font-size:12px;text-transform:none;letter-spacing:normal;white-space:normal;cursor:auto;}
+  .ig-filter-menu.open{display:block;}
+  .ig-filter-menu .ig-fmenu-actions{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid #eef0f3;}
+  .ig-filter-menu .ig-fmenu-actions a{font-size:11px;color:var(--mid);cursor:pointer;text-decoration:underline;}
+  .ig-filter-menu label{display:flex;align-items:center;gap:6px;padding:3px 2px;cursor:pointer;font-weight:400;color:#1a2733;}
+  .ig-filter-menu label:hover{background:#f5f8fa;}
+  .ig-filter-menu input[type=checkbox]{width:13px;height:13px;accent-color:var(--navy);cursor:pointer;}
+  .ig-filter-menu .ig-fmenu-count{color:var(--gray);font-size:10px;margin-left:auto;}
 </style>
 
 <div class="site-header">
@@ -1487,16 +1499,16 @@
     <table class="ig-table">
       <thead><tr>
         <th class="sortable" onclick="igSort('hotel')">Hotel <span class="si" id="ig-si-hotel">⇅</span></th>
-        <th class="sortable" onclick="igSort('brand')">Brand <span class="si" id="ig-si-brand">⇅</span></th>
-        <th class="sortable" onclick="igSort('brandStyle')">Brand Style <span class="si" id="ig-si-brandStyle">⇅</span></th>
+        <th class="sortable ig-th-filterable" onclick="igSort('brand')">Brand <span class="si" id="ig-si-brand">⇅</span><span class="ig-filter-btn" id="ig-fbtn-brand" onclick="event.stopPropagation();igToggleFilterMenu('brand')">▾</span><div class="ig-filter-menu" id="ig-fmenu-brand" onclick="event.stopPropagation()"></div></th>
+        <th class="sortable ig-th-filterable" onclick="igSort('brandStyle')">Brand Style <span class="si" id="ig-si-brandStyle">⇅</span><span class="ig-filter-btn" id="ig-fbtn-brandStyle" onclick="event.stopPropagation();igToggleFilterMenu('brandStyle')">▾</span><div class="ig-filter-menu" id="ig-fmenu-brandStyle" onclick="event.stopPropagation()"></div></th>
         <th class="sortable" onclick="igSort('pais')">País <span class="si" id="ig-si-pais">⇅</span></th>
         <th class="sortable" onclick="igSort('ciudad')">Ciudad <span class="si" id="ig-si-ciudad">⇅</span></th>
-        <th class="sortable" onclick="igSort('do')">DO <span class="si" id="ig-si-do">⇅</span></th>
+        <th class="sortable ig-th-filterable" onclick="igSort('do')">DO <span class="si" id="ig-si-do">⇅</span><span class="ig-filter-btn" id="ig-fbtn-do" onclick="event.stopPropagation();igToggleFilterMenu('do')">▾</span><div class="ig-filter-menu" id="ig-fmenu-do" onclick="event.stopPropagation()"></div></th>
         <th>Dirección</th>
-        <th class="sortable" onclick="igSort('estrellas')">Estrellas <span class="si" id="ig-si-estrellas">⇅</span></th>
+        <th class="sortable ig-th-filterable" onclick="igSort('estrellas')">Estrellas <span class="si" id="ig-si-estrellas">⇅</span><span class="ig-filter-btn" id="ig-fbtn-estrellas" onclick="event.stopPropagation();igToggleFilterMenu('estrellas')">▾</span><div class="ig-filter-menu" id="ig-fmenu-estrellas" onclick="event.stopPropagation()"></div></th>
         <th class="sortable" onclick="igSort('llaves')"># Llaves <span class="si" id="ig-si-llaves">⇅</span></th>
-        <th class="sortable" onclick="igSort('categoria')">Categoría <span class="si" id="ig-si-categoria">⇅</span></th>
-        <th class="sortable" onclick="igSort('tipo')">Tipo <span class="si" id="ig-si-tipo">⇅</span></th>
+        <th class="sortable ig-th-filterable" onclick="igSort('categoria')">Categoría <span class="si" id="ig-si-categoria">⇅</span><span class="ig-filter-btn" id="ig-fbtn-categoria" onclick="event.stopPropagation();igToggleFilterMenu('categoria')">▾</span><div class="ig-filter-menu" id="ig-fmenu-categoria" onclick="event.stopPropagation()"></div></th>
+        <th class="sortable ig-th-filterable" onclick="igSort('tipo')">Tipo <span class="si" id="ig-si-tipo">⇅</span><span class="ig-filter-btn" id="ig-fbtn-tipo" onclick="event.stopPropagation();igToggleFilterMenu('tipo')">▾</span><div class="ig-filter-menu" id="ig-fmenu-tipo" onclick="event.stopPropagation()"></div></th>
         <th>Sitio Web</th>
       </tr></thead>
       <tbody id="ig-tbody"></tbody>
@@ -2112,6 +2124,9 @@ render();
   const igState = { pais:null, ciudad:null, term:'' };
   const igCol = (a,b)=>a.localeCompare(b,'es');
   let igSortKey = null, igSortAsc = true;
+  const IG_FILTER_KEYS = ['brand','brandStyle','do','estrellas','categoria','tipo'];
+  const igColumnFilters = {};
+  IG_FILTER_KEYS.forEach(k=>{ igColumnFilters[k] = new Set(); });
 
   function igEsc(s){
     return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -2127,7 +2142,7 @@ render();
   }
 
   function igRowHtml(r){
-    return `<tr data-pais="${igEsc(r.pais)}" data-ciudad="${igEsc(r.ciudad)}" data-name="${igEsc((r.hotel+' '+r.brand+' '+r.brandStyle+' '+r.ciudad).toLowerCase())}">
+    return `<tr data-pais="${igEsc(r.pais)}" data-ciudad="${igEsc(r.ciudad)}" data-brand="${igEsc(r.brand)}" data-brand-style="${igEsc(r.brandStyle)}" data-do="${igEsc(r.do)}" data-estrellas="${igEsc(r.estrellasLabel)}" data-categoria="${igEsc(r.categoria)}" data-tipo="${igEsc(r.tipo)}" data-name="${igEsc((r.hotel+' '+r.brand+' '+r.brandStyle+' '+r.ciudad).toLowerCase())}">
       <td class="ig-hotel">${igEsc(r.hotel)}</td>
       <td><span class="ig-brand-badge">${igEsc(r.brand)}</span></td>
       <td>${igEsc(r.brandStyle)}</td>
@@ -2164,13 +2179,93 @@ render();
       const okP = !igState.pais || tr.dataset.pais===igState.pais;
       const okC = !igState.ciudad || tr.dataset.ciudad===igState.ciudad;
       const okT = !igState.term || tr.dataset.name.includes(igState.term);
-      const visible = okP && okC && okT;
+      const okCols = IG_FILTER_KEYS.every(k=>{
+        const set = igColumnFilters[k];
+        return set.size === 0 || set.has(tr.dataset[k]);
+      });
+      const visible = okP && okC && okT && okCols;
       tr.classList.toggle('hidden', !visible);
       if(visible) n++;
     });
     document.getElementById('ig-count-pill').textContent = n+' '+(n===1?'hotel':'hoteles');
     document.getElementById('ig-no-results').style.display = n===0 ? 'block' : 'none';
   }
+
+  function igColumnValues(key){
+    const counts = {};
+    document.querySelectorAll('#ig-tbody tr').forEach(tr=>{
+      const v = tr.dataset[key];
+      counts[v] = (counts[v]||0) + 1;
+    });
+    return Object.keys(counts).sort(igCol).map(v=>({value:v, count:counts[v]}));
+  }
+
+  window.igToggleFilterMenu = function(key){
+    const menu = document.getElementById(`ig-fmenu-${key}`);
+    const isOpen = menu.classList.contains('open');
+    document.querySelectorAll('.ig-filter-menu.open').forEach(m=>m.classList.remove('open'));
+    if(isOpen) return;
+    igBuildFilterMenu(key);
+    menu.classList.add('open');
+  };
+
+  function igBuildFilterMenu(key){
+    const menu = document.getElementById(`ig-fmenu-${key}`);
+    const options = igColumnValues(key);
+    const activeSet = igColumnFilters[key];
+    const actions = document.createElement('div');
+    actions.className = 'ig-fmenu-actions';
+    const selectAll = document.createElement('a');
+    selectAll.textContent = 'Todos';
+    selectAll.onclick = () => { activeSet.clear(); igBuildFilterMenu(key); igApplyFilters(); igUpdateFilterBtn(key); };
+    const clearAll = document.createElement('a');
+    clearAll.textContent = 'Ninguno';
+    clearAll.onclick = () => { options.forEach(o=>activeSet.add(o.value)); igBuildFilterMenu(key); igApplyFilters(); igUpdateFilterBtn(key); };
+    actions.appendChild(selectAll);
+    actions.appendChild(clearAll);
+    menu.innerHTML = '';
+    menu.appendChild(actions);
+    options.forEach(o=>{
+      const label = document.createElement('label');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = activeSet.size === 0 || activeSet.has(o.value);
+      cb.onchange = () => {
+        if(activeSet.size === 0){
+          options.forEach(x=>{ if(x.value !== o.value) activeSet.add(x.value); });
+        } else if(cb.checked){
+          activeSet.delete(o.value);
+          if(activeSet.size === 0) options.forEach(x=>activeSet.add(x.value));
+          else if(options.every(x=>!activeSet.has(x.value))) activeSet.clear();
+        } else {
+          activeSet.add(o.value);
+        }
+        igApplyFilters();
+        igUpdateFilterBtn(key);
+      };
+      label.appendChild(cb);
+      const txt = document.createElement('span');
+      txt.textContent = o.value;
+      label.appendChild(txt);
+      const cnt = document.createElement('span');
+      cnt.className = 'ig-fmenu-count';
+      cnt.textContent = o.count;
+      label.appendChild(cnt);
+      menu.appendChild(label);
+    });
+  }
+
+  function igUpdateFilterBtn(key){
+    const btn = document.getElementById(`ig-fbtn-${key}`);
+    if(!btn) return;
+    btn.classList.toggle('active', igColumnFilters[key].size > 0);
+  }
+
+  document.addEventListener('click', (e)=>{
+    if(!e.target.closest('.ig-filter-menu') && !e.target.closest('.ig-filter-btn')){
+      document.querySelectorAll('.ig-filter-menu.open').forEach(m=>m.classList.remove('open'));
+    }
+  });
 
   function igChip(label,count,active){
     const b=document.createElement('button');
