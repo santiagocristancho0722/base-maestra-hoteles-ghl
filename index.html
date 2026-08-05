@@ -2209,7 +2209,7 @@ function setEstado(id, value){ findById(id).estado = value; render(); }
 function setChannel(id, key, checked){ findById(id).canales[key] = checked; render(); }
 
 function renderKPIs(data){
-  const total = data.length;
+  const total = new Set(data.map(h=>h.hotel)).size;
   const conMod = data.filter(h=>h.modificaciones === 'Sí').length;
   const actualizados = data.filter(h=>h.estado === 'Actualizado').length;
   document.getElementById('kpiRow').innerHTML = `
