@@ -372,7 +372,6 @@
 </div>
 
 <div id="metricasView" class="consulta-view">
-  <div class="kpi-row" id="metricasKpiRow"></div>
   <div class="progress-wrap" id="metricasProgressWrap"></div>
   <div class="dash-grid" id="metricasDashGrid"></div>
 </div>
@@ -2302,18 +2301,6 @@ const CICLO_PALETTE = [
   ["#9D174D","#fce7f3"],["#4C1D95","#ede9fe"],["#7C2D12","#ffedd5"]
 ];
 
-function renderMetricasKPIs(data) {
-  const {total, respondieron, sinResp, conMod, actualizados} = statsMetricas(data);
-  document.getElementById('metricasKpiRow').innerHTML = `
-    <div class="kpi"><div class="num">${total}</div><div class="lbl">Propiedades</div></div>
-    <div class="kpi"><div class="num" style="color:#276221">${respondieron}</div><div class="lbl">Respondieron</div></div>
-    <div class="kpi"><div class="num" style="color:#9c0006">${sinResp}</div><div class="lbl">Sin respuesta</div></div>
-    <div class="kpi"><div class="num" style="color:#2a5e95">${conMod}</div><div class="lbl">Con modificaciones</div></div>
-    <div class="kpi"><div class="num" style="color:#856404">${actualizados}</div><div class="lbl">Actualizados en chatbot</div></div>
-  `;
-  renderMetricasProgress(data);
-}
-
 function renderMetricasProgress(data) {
   const wrap = document.getElementById('metricasProgressWrap');
   if(!data.length){ wrap.innerHTML=''; return; }
@@ -2674,13 +2661,15 @@ function renderMetricasDashboard() {
 }
 
 function renderMetricasView() {
-  renderMetricasKPIs(METRICAS_DATA);
+  renderKPIs(DATA);
+  renderMetricasProgress(METRICAS_DATA);
   renderMetricasDashboard();
 }
 
 function showMetricas(){
   dirActive = 'metricas';
   hideAllViews();
+  document.getElementById('kpiRow').style.display = '';
   document.getElementById('metricasView').style.display = 'block';
   renderCicloTabs();
   renderMetricasView();
