@@ -372,7 +372,6 @@
 </div>
 
 <div id="metricasView" class="consulta-view">
-  <div class="progress-wrap" id="metricasProgressWrap"></div>
   <div class="dash-grid" id="metricasDashGrid"></div>
 </div>
 
@@ -2286,71 +2285,10 @@ function applyFilters(){ render(); }
 
 const METRICAS_DATA = JSON.parse(document.getElementById('metricasData').textContent);
 
-function statsMetricas(data) {
-  const hotels = [...new Set(data.map(d=>d.hotel))];
-  const has = (h,pred) => data.some(d=>d.hotel===h && pred(d));
-  const total = hotels.length;
-  const respondieron = hotels.filter(h=>has(h,d=>d.respuesta)).length;
-  const conMod = hotels.filter(h=>has(h,d=>d.mod==="Sí")).length;
-  const actualizados = hotels.filter(h=>has(h,d=>d.estado==="Actualizado")).length;
-  return {total, respondieron, sinResp: total-respondieron, conMod, sinMod: respondieron-conMod, actualizados};
-}
-
 const CICLO_PALETTE = [
   ["#185FA5","#dbeafe"],["#065F46","#d1fae5"],["#92400E","#fef3c7"],
   ["#9D174D","#fce7f3"],["#4C1D95","#ede9fe"],["#7C2D12","#ffedd5"]
 ];
-
-function renderMetricasProgress(data) {
-  const wrap = document.getElementById('metricasProgressWrap');
-  if(!data.length){ wrap.innerHTML=''; return; }
-  const {total, respondieron, conMod, sinMod, sinResp, actualizados} = statsMetricas(data);
-  const pct = total ? Math.round(respondieron/total*100) : 0;
-  const pctChatbot = conMod ? Math.round(actualizados/conMod*100) : 0;
-  const ciclosEnVista = [...new Set(data.map(d=>d.ciclo))].sort();
-  let cicloRows = '';
-  if(ciclosEnVista.length > 1) {
-    cicloRows = `<div class="progress-by-ciclo">` +
-      ciclosEnVista.map((c,i)=>{
-        const d = data.filter(h=>h.ciclo===c);
-        const r = d.filter(h=>h.respuesta).length;
-        const p = d.length ? Math.round(r/d.length*100) : 0;
-        const [fg] = CICLO_PALETTE[i % CICLO_PALETTE.length];
-        return `<div class="ciclo-bar-row">
-          <div class="ciclo-bar-name" style="color:${fg}">${c}</div>
-          <div class="ciclo-bar-track"><div class="ciclo-bar-fill" style="width:${p}%;background:${fg}"></div></div>
-          <div class="ciclo-bar-pct" style="color:${fg};font-weight:600">${p}%</div>
-        </div>`;
-      }).join('') + `</div>`;
-  }
-  wrap.innerHTML = `
-    <div class="progress-block">
-      <div class="progress-header">
-        <div class="progress-label">% de cumplimiento — hoteles que respondieron el correo</div>
-        <div><span class="progress-pct">${pct}%</span><span class="progress-sub">${respondieron} de ${total} hoteles</span></div>
-      </div>
-      <div class="progress-track"><div class="progress-fill" id="metricasProgFill" style="width:0%"></div></div>
-    </div>
-    <div class="progress-block">
-      <div class="progress-header">
-        <div class="progress-label">% de cumplimiento — actualizados en el chatbot</div>
-        <div><span class="progress-pct" style="color:#92400E">${pctChatbot}%</span><span class="progress-sub">${actualizados} de ${conMod} con modificaciones</span></div>
-      </div>
-      <div class="progress-track"><div class="progress-fill chatbot" id="metricasProgFillChatbot" style="width:0%"></div></div>
-    </div>
-    <div class="progress-segments">
-      <div class="progress-seg"><div class="progress-dot" style="background:#276221"></div>Con modificaciones: <strong>${conMod}</strong></div>
-      <div class="progress-seg"><div class="progress-dot" style="background:#856404"></div>Actualizados en chatbot: <strong>${actualizados}</strong></div>
-      <div class="progress-seg"><div class="progress-dot" style="background:#2a5e95"></div>Sin modificaciones: <strong>${sinMod}</strong></div>
-      <div class="progress-seg"><div class="progress-dot" style="background:#e5e7eb"></div>Sin respuesta: <strong>${sinResp}</strong></div>
-    </div>
-    ${cicloRows}
-  `;
-  requestAnimationFrame(()=>{
-    const f = document.getElementById('metricasProgFill'); if(f) f.style.width = pct+'%';
-    const fc = document.getElementById('metricasProgFillChatbot'); if(fc) fc.style.width = pctChatbot+'%';
-  });
-}
 
 const MESES_ORDEN = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 function ordenarCiclos(ciclos) {
@@ -2662,7 +2600,6 @@ function renderMetricasDashboard() {
 
 function renderMetricasView() {
   renderKPIs(DATA);
-  renderMetricasProgress(METRICAS_DATA);
   renderMetricasDashboard();
 }
 
