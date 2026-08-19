@@ -235,12 +235,6 @@
   .ig-web-links a{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;background:var(--navy);color:var(--white);text-decoration:none;}
   .ig-web-links a:hover{background:var(--mid);}
   td.ig-mono{font-family:'Courier New',monospace;font-size:11px;color:var(--gray);white-space:nowrap;}
-  .ig-tier-badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap;text-transform:uppercase;letter-spacing:.03em;}
-  .ig-tier-badge.ig-tier-diamond{background:#e3f1fb;color:#0b6fa8;border:1px solid #a9d7f0;}
-  .ig-tier-badge.ig-tier-gold{background:#fdf2d9;color:#8a6100;border:1px solid #f0d78c;}
-  .ig-tier-badge.ig-tier-silver{background:#eef0f2;color:#5a6570;border:1px solid #d1d6db;}
-  .ig-tier-badge.ig-tier-bronze{background:#f7e6d8;color:#8a4b1f;border:1px solid #e6bd98;}
-  .ig-tier-badge.ig-tier-nd{background:#f2f2f2;color:var(--gray);border:1px solid var(--lgray);}
   th.ig-th-filterable{position:relative;}
   .ig-filter-btn{display:inline-block;margin-left:5px;padding:0 3px;font-size:10px;opacity:.7;cursor:pointer;border-radius:3px;}
   .ig-filter-btn:hover{background:rgba(255,255,255,.2);}
@@ -1573,7 +1567,6 @@
         <th class="sortable ig-th-filterable" onclick="igSort('estrellas')">Estrellas <span class="si" id="ig-si-estrellas">⇅</span><span class="ig-filter-btn" id="ig-fbtn-estrellas" onclick="event.stopPropagation();igToggleFilterMenu('estrellas')">▾</span><div class="ig-filter-menu" id="ig-fmenu-estrellas" onclick="event.stopPropagation()"></div></th>
         <th class="sortable" onclick="igSort('llaves')"># Llaves <span class="si" id="ig-si-llaves">⇅</span></th>
         <th class="sortable ig-th-filterable" onclick="igSort('categoria')">Categoría <span class="si" id="ig-si-categoria">⇅</span><span class="ig-filter-btn" id="ig-fbtn-categoria" onclick="event.stopPropagation();igToggleFilterMenu('categoria')">▾</span><div class="ig-filter-menu" id="ig-fmenu-categoria" onclick="event.stopPropagation()"></div></th>
-        <th class="sortable ig-th-filterable" onclick="igSort('subcategoria')">Subcategoría <span class="si" id="ig-si-subcategoria">⇅</span><span class="ig-filter-btn" id="ig-fbtn-subcategoria" onclick="event.stopPropagation();igToggleFilterMenu('subcategoria')">▾</span><div class="ig-filter-menu" id="ig-fmenu-subcategoria" onclick="event.stopPropagation()"></div></th>
         <th class="sortable ig-th-filterable" onclick="igSort('tipo')">Tipo <span class="si" id="ig-si-tipo">⇅</span><span class="ig-filter-btn" id="ig-fbtn-tipo" onclick="event.stopPropagation();igToggleFilterMenu('tipo')">▾</span><div class="ig-filter-menu" id="ig-fmenu-tipo" onclick="event.stopPropagation()"></div></th>
         <th>Sitio Web</th>
         <th class="sortable" onclick="igSort('cmsId')">CMS ID <span class="si" id="ig-si-cmsId">⇅</span></th>
@@ -2940,7 +2933,7 @@ showMetricas();
   const igState = { pais:null, ciudad:null, term:'' };
   const igCol = (a,b)=>a.localeCompare(b,'es');
   let igSortKey = null, igSortAsc = true;
-  const IG_FILTER_KEYS = ['brand','brandStyle','do','estrellas','categoria','subcategoria','tipo'];
+  const IG_FILTER_KEYS = ['brand','brandStyle','do','estrellas','categoria','tipo'];
   const igColumnFilters = {};
   IG_FILTER_KEYS.forEach(k=>{ igColumnFilters[k] = new Set(); });
 
@@ -2957,16 +2950,8 @@ showMetricas();
     return `<span class="ig-stars" title="${igEsc(r.estrellasLabel)}">${'⭐'.repeat(r.estrellas)}</span>`;
   }
 
-  function igTierBadge(r){
-    const t = r.subcategoria;
-    if(!t) return '<span class="ig-no-web">—</span>';
-    if(t === '#N/D') return `<span class="ig-tier-badge ig-tier-nd">${igEsc(t)}</span>`;
-    const cls = 'ig-tier-' + t.toLowerCase();
-    return `<span class="ig-tier-badge ${cls}">${igEsc(t)}</span>`;
-  }
-
   function igRowHtml(r){
-    return `<tr data-pais="${igEsc(r.pais)}" data-ciudad="${igEsc(r.ciudad)}" data-brand="${igEsc(r.brand)}" data-brand-style="${igEsc(r.brandStyle)}" data-do="${igEsc(r.do)}" data-estrellas="${igEsc(r.estrellasLabel)}" data-categoria="${igEsc(r.categoria)}" data-subcategoria="${igEsc(r.subcategoria || 'Sin dato')}" data-tipo="${igEsc(r.tipo)}" data-name="${igEsc((r.hotel+' '+r.brand+' '+r.brandStyle+' '+r.ciudad).toLowerCase())}">
+    return `<tr data-pais="${igEsc(r.pais)}" data-ciudad="${igEsc(r.ciudad)}" data-brand="${igEsc(r.brand)}" data-brand-style="${igEsc(r.brandStyle)}" data-do="${igEsc(r.do)}" data-estrellas="${igEsc(r.estrellasLabel)}" data-categoria="${igEsc(r.categoria)}" data-tipo="${igEsc(r.tipo)}" data-name="${igEsc((r.hotel+' '+r.brand+' '+r.brandStyle+' '+r.ciudad).toLowerCase())}">
       <td class="ig-hotel">${igEsc(r.hotel)}</td>
       <td><span class="ig-brand-badge">${igEsc(r.brand)}</span></td>
       <td>${igEsc(r.brandStyle)}</td>
@@ -2977,7 +2962,6 @@ showMetricas();
       <td class="ig-num">${igStars(r)}</td>
       <td class="ig-num">${r.llaves}</td>
       <td>${igEsc(r.categoria)}</td>
-      <td>${igTierBadge(r)}</td>
       <td>${igEsc(r.tipo)}</td>
       <td>${igWebLinks(r)}</td>
       <td class="ig-mono">${r.cmsId!=null ? igEsc(r.cmsId) : '<span class="ig-no-web">—</span>'}</td>
@@ -3146,7 +3130,7 @@ showMetricas();
 
   window.igSort = function(key){
     if(igSortKey === key){ igSortAsc = !igSortAsc; } else { igSortKey = key; igSortAsc = true; }
-    const keys = ['hotel','brand','brandStyle','pais','ciudad','do','estrellas','llaves','categoria','subcategoria','tipo','cmsId','cmsSlug','crsCode'];
+    const keys = ['hotel','brand','brandStyle','pais','ciudad','do','estrellas','llaves','categoria','tipo','cmsId','cmsSlug','crsCode'];
     keys.forEach(k=>{
       const el = document.getElementById(`ig-si-${k}`);
       if(!el) return;
@@ -3157,11 +3141,11 @@ showMetricas();
   };
 
   window.descargarInfoGeneralExcel = function(){
-    const headers = ['Hotel','Brand','Brand Style','País','Ciudad','DO','Dirección','Estrellas','# Llaves','Categoría','Subcategoría','Tipo','Sitio Web','CMS ID','CMS Slug','CRS Código'];
+    const headers = ['Hotel','Brand','Brand Style','País','Ciudad','DO','Dirección','Estrellas','# Llaves','Categoría','Tipo','Sitio Web','CMS ID','CMS Slug','CRS Código'];
     let html = '<table border="1"><thead><tr>' + headers.map(h=>`<th>${igEsc(h)}</th>`).join('') + '</tr></thead><tbody>';
     INFO_GENERAL.forEach(r=>{
       const webText = r.web.map(w=>`${w.idioma}: ${w.url}`).join(' | ');
-      const cells = [r.hotel, r.brand, r.brandStyle, r.pais, r.ciudad, r.do, r.direccion, r.estrellasLabel, r.llaves, r.categoria, r.subcategoria, r.tipo, webText, r.cmsId ?? '', r.cmsSlug, r.crsCode];
+      const cells = [r.hotel, r.brand, r.brandStyle, r.pais, r.ciudad, r.do, r.direccion, r.estrellasLabel, r.llaves, r.categoria, r.tipo, webText, r.cmsId ?? '', r.cmsSlug, r.crsCode];
       html += '<tr>' + cells.map(v=>`<td>${igEsc(v)}</td>`).join('') + '</tr>';
     });
     html += '</tbody></table>';
