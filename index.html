@@ -229,7 +229,6 @@
   table.ig-table tr.hidden{display:none;}
   td.ig-hotel{font-weight:700;color:var(--navy);white-space:nowrap;}
   td.ig-num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
-  .ig-stars{font-size:13px;letter-spacing:1px;white-space:nowrap;}
   td.ig-dir{min-width:220px;line-height:1.4;}
   .ig-brand-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:#eef3f9;color:var(--navy);white-space:nowrap;}
   .ig-web-links{display:flex;gap:6px;flex-wrap:wrap;}
@@ -1565,7 +1564,6 @@
         <th class="sortable" onclick="igSort('ciudad')">Ciudad <span class="si" id="ig-si-ciudad">⇅</span></th>
         <th class="sortable ig-th-filterable" onclick="igSort('do')">DO <span class="si" id="ig-si-do">⇅</span><span class="ig-filter-btn" id="ig-fbtn-do" onclick="event.stopPropagation();igToggleFilterMenu('do')">▾</span><div class="ig-filter-menu" id="ig-fmenu-do" onclick="event.stopPropagation()"></div></th>
         <th>Dirección</th>
-        <th class="sortable ig-th-filterable" onclick="igSort('estrellas')">Estrellas <span class="si" id="ig-si-estrellas">⇅</span><span class="ig-filter-btn" id="ig-fbtn-estrellas" onclick="event.stopPropagation();igToggleFilterMenu('estrellas')">▾</span><div class="ig-filter-menu" id="ig-fmenu-estrellas" onclick="event.stopPropagation()"></div></th>
         <th class="sortable" onclick="igSort('llaves')"># Llaves <span class="si" id="ig-si-llaves">⇅</span></th>
         <th class="sortable ig-th-filterable" onclick="igSort('categoria')">Categoría <span class="si" id="ig-si-categoria">⇅</span><span class="ig-filter-btn" id="ig-fbtn-categoria" onclick="event.stopPropagation();igToggleFilterMenu('categoria')">▾</span><div class="ig-filter-menu" id="ig-fmenu-categoria" onclick="event.stopPropagation()"></div></th>
         <th class="sortable ig-th-filterable" onclick="igSort('tipo')">Tipo <span class="si" id="ig-si-tipo">⇅</span><span class="ig-filter-btn" id="ig-fbtn-tipo" onclick="event.stopPropagation();igToggleFilterMenu('tipo')">▾</span><div class="ig-filter-menu" id="ig-fmenu-tipo" onclick="event.stopPropagation()"></div></th>
@@ -2935,7 +2933,7 @@ showMetricas();
   const igState = { pais:null, ciudad:null, term:'' };
   const igCol = (a,b)=>a.localeCompare(b,'es');
   let igSortKey = null, igSortAsc = true;
-  const IG_FILTER_KEYS = ['brand','brandStyle','do','estrellas','categoria','tipo'];
+  const IG_FILTER_KEYS = ['brand','brandStyle','do','categoria','tipo'];
   const igColumnFilters = {};
   IG_FILTER_KEYS.forEach(k=>{ igColumnFilters[k] = new Set(); });
 
@@ -2948,12 +2946,8 @@ showMetricas();
     return `<div class="ig-web-links">${r.web.map(w=>`<a href="${igEsc(w.url)}" target="_blank" rel="noopener">${igEsc(w.idioma)}</a>`).join('')}</div>`;
   }
 
-  function igStars(r){
-    return `<span class="ig-stars" title="${igEsc(r.estrellasLabel)}">${'⭐'.repeat(r.estrellas)}</span>`;
-  }
-
   function igRowHtml(r){
-    return `<tr data-pais="${igEsc(r.pais)}" data-ciudad="${igEsc(r.ciudad)}" data-brand="${igEsc(r.brand)}" data-brand-style="${igEsc(r.brandStyle)}" data-do="${igEsc(r.do)}" data-estrellas="${igEsc(r.estrellasLabel)}" data-categoria="${igEsc(r.categoria)}" data-tipo="${igEsc(r.tipo)}" data-name="${igEsc((r.hotel+' '+r.brand+' '+r.brandStyle+' '+r.ciudad).toLowerCase())}">
+    return `<tr data-pais="${igEsc(r.pais)}" data-ciudad="${igEsc(r.ciudad)}" data-brand="${igEsc(r.brand)}" data-brand-style="${igEsc(r.brandStyle)}" data-do="${igEsc(r.do)}" data-categoria="${igEsc(r.categoria)}" data-tipo="${igEsc(r.tipo)}" data-name="${igEsc((r.hotel+' '+r.brand+' '+r.brandStyle+' '+r.ciudad).toLowerCase())}">
       <td class="ig-hotel">${igEsc(r.hotel)}</td>
       <td><span class="ig-brand-badge">${igEsc(r.brand)}</span></td>
       <td>${igEsc(r.brandStyle)}</td>
@@ -2961,7 +2955,6 @@ showMetricas();
       <td>${igEsc(r.ciudad)}</td>
       <td>${igEsc(r.do)}</td>
       <td class="ig-dir">${igEsc(r.direccion)}</td>
-      <td class="ig-num">${igStars(r)}</td>
       <td class="ig-num">${r.llaves}</td>
       <td>${igEsc(r.categoria)}</td>
       <td>${igEsc(r.tipo)}</td>
@@ -3133,7 +3126,7 @@ showMetricas();
 
   window.igSort = function(key){
     if(igSortKey === key){ igSortAsc = !igSortAsc; } else { igSortKey = key; igSortAsc = true; }
-    const keys = ['hotel','brand','brandStyle','pais','ciudad','do','estrellas','llaves','categoria','tipo','cmsId','cmsSlug','crsCode','identificadorCubo'];
+    const keys = ['hotel','brand','brandStyle','pais','ciudad','do','llaves','categoria','tipo','cmsId','cmsSlug','crsCode','identificadorCubo'];
     keys.forEach(k=>{
       const el = document.getElementById(`ig-si-${k}`);
       if(!el) return;
@@ -3144,11 +3137,11 @@ showMetricas();
   };
 
   window.descargarInfoGeneralExcel = function(){
-    const headers = ['Hotel','Brand','Brand Style','País','Ciudad','DO','Dirección','Estrellas','# Llaves','Categoría','Tipo','Sitio Web','CMS ID','CMS Slug','CRS Código','Identificador Cubo'];
+    const headers = ['Hotel','Brand','Brand Style','País','Ciudad','DO','Dirección','# Llaves','Categoría','Tipo','Sitio Web','CMS ID','CMS Slug','CRS Código','Identificador Cubo'];
     let html = '<table border="1"><thead><tr>' + headers.map(h=>`<th>${igEsc(h)}</th>`).join('') + '</tr></thead><tbody>';
     INFO_GENERAL.forEach(r=>{
       const webText = r.web.map(w=>`${w.idioma}: ${w.url}`).join(' | ');
-      const cells = [r.hotel, r.brand, r.brandStyle, r.pais, r.ciudad, r.do, r.direccion, r.estrellasLabel, r.llaves, r.categoria, r.tipo, webText, r.cmsId ?? '', r.cmsSlug, r.crsCode, r.identificadorCubo ?? ''];
+      const cells = [r.hotel, r.brand, r.brandStyle, r.pais, r.ciudad, r.do, r.direccion, r.llaves, r.categoria, r.tipo, webText, r.cmsId ?? '', r.cmsSlug, r.crsCode, r.identificadorCubo ?? ''];
       html += '<tr>' + cells.map(v=>`<td>${igEsc(v)}</td>`).join('') + '</tr>';
     });
     html += '</tbody></table>';
