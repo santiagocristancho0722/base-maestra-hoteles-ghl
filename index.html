@@ -2550,7 +2550,7 @@ function buildChannelColumn(h){
 
 function getCiclos(){
   const set = new Set(DATA.map(d=>d.ciclo));
-  return ["Métricas", ...Array.from(set).sort()];
+  return ["Métricas", ...ordenarCiclos(Array.from(set))];
 }
 
 function renderCicloTabs(){
