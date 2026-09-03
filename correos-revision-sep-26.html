@@ -1,0 +1,1922 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revisión de Septiembre</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@600;700;800&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#f2f5f7; --surface:#ffffff; --surface-2:#eef2f6; --border:#dbe2e9;
+    --navy:#023859; --mid:#2a5e95; --blue:#6399ba;
+    --text:#142433; --muted:#5c6b78;
+    --green-bg:#e4f3e6; --green-fg:#1f7a3d;
+    --red-bg:#fbe8e7; --red-fg:#b3261e;
+    --shadow: 0 1px 2px rgba(2,56,89,.05), 0 6px 20px rgba(2,56,89,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0c1922; --surface:#132531; --surface-2:#17303e; --border:#25404f;
+      --navy:#0d3350; --mid:#4f85bd; --blue:#7fb2d6;
+      --text:#e7eef3; --muted:#93a7b5;
+      --green-bg:#123422; --green-fg:#7fd6a0;
+      --red-bg:#3a1a18; --red-fg:#ff9c90;
+      --shadow: 0 1px 2px rgba(0,0,0,.35), 0 6px 24px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0c1922; --surface:#132531; --surface-2:#17303e; --border:#25404f;
+    --navy:#0d3350; --mid:#4f85bd; --blue:#7fb2d6;
+    --text:#e7eef3; --muted:#93a7b5;
+    --green-bg:#123422; --green-fg:#7fd6a0;
+    --red-bg:#3a1a18; --red-fg:#ff9c90;
+    --shadow: 0 1px 2px rgba(0,0,0,.35), 0 6px 24px rgba(0,0,0,.3);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Source Sans 3',system-ui,sans-serif;}
+  h1,h2{font-family:'Libre Franklin',system-ui,sans-serif;text-wrap:balance;}
+  a{color:inherit;}
+
+  .top{background:var(--navy);color:#fff;padding:28px 32px;}
+  .top .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--blue);margin:0 0 6px;}
+  .top h1{margin:0 0 6px;font-size:22px;font-weight:800;letter-spacing:-.01em;}
+  .top p{margin:0;color:#c9dcec;font-size:13px;}
+
+  .layout{display:flex;max-width:1320px;margin:0 auto;align-items:flex-start;}
+
+  .nav{width:270px;flex:none;padding:22px 12px;position:sticky;top:0;max-height:100vh;overflow-y:auto;}
+  .nav-title{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500;margin:0 10px 10px;}
+  .nav-item{display:flex;gap:9px;align-items:baseline;padding:6.5px 10px;font-size:13px;text-decoration:none;color:var(--text);border-radius:7px;}
+  .nav-item:hover{background:var(--surface-2);}
+  .nav-num{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);flex:none;width:16px;}
+
+  .content{flex:1;min-width:0;padding:24px 28px 72px;}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:0;margin-bottom:20px;box-shadow:var(--shadow);overflow:hidden;}
+  .card-top{display:flex;align-items:baseline;gap:12px;padding:18px 24px 14px;border-bottom:1px solid var(--border);}
+  .card-index{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);flex:none;}
+  .card h2{margin:0;font-size:17px;color:var(--navy);font-weight:700;}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .card h2{color:var(--blue);}}
+  :root[data-theme="dark"] .card h2{color:var(--blue);}
+
+  .meta{background:var(--surface-2);font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:12px 24px;display:flex;flex-direction:column;gap:5px;}
+  .meta-row{display:flex;gap:10px;}
+  .meta-l{flex:none;width:52px;color:var(--muted);}
+  .meta-v{color:var(--text);word-break:break-word;}
+  .meta-v.subject{font-weight:500;}
+  .no-data{color:var(--muted);font-style:italic;font-family:'Source Sans 3',sans-serif;}
+  a.mailto{color:var(--mid);text-decoration:none;border-bottom:1px dotted var(--blue);}
+  a.mailto:hover{color:var(--navy);}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) a.mailto{color:var(--blue);}}
+  :root[data-theme="dark"] a.mailto{color:var(--blue);}
+
+  .body-block{padding:20px 24px 24px;max-width:64ch;}
+  .body-block p{font-size:14.5px;line-height:1.65;margin:0 0 13px;}
+  .body-block p.firma{margin-bottom:0;}
+  .email-list{margin:0 0 15px;padding-left:20px;}
+  .email-list li{font-size:14.5px;line-height:1.75;}
+  .ejemplo-label{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px !important;}
+
+  .example-box{display:flex;gap:12px;margin:0 0 16px;flex-wrap:wrap;}
+  .ex-col{flex:1;min-width:200px;border-radius:9px;padding:12px 14px;}
+  .ex-antes{background:var(--red-bg);}
+  .ex-despues{background:var(--green-bg);}
+  .ex-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+  .ex-antes .ex-label{color:var(--red-fg);}
+  .ex-despues .ex-label{color:var(--green-fg);}
+  .ex-dialog{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:3px;}
+  .ex-antes .ex-text{color:var(--red-fg);text-decoration:line-through;font-size:13px;}
+  .ex-despues .ex-text{color:var(--green-fg);font-weight:600;font-size:13px;}
+
+  @media(max-width:880px){
+    .layout{flex-direction:column;}
+    .nav{width:100%;position:static;max-height:none;display:flex;flex-wrap:wrap;gap:2px;padding:16px 20px;}
+    .nav-title{width:100%;}
+  }
+  @media print{.nav{display:none;} .card{break-inside:avoid;box-shadow:none;}}
+</style>
+</head>
+<body>
+<div class="top">
+  <p class="eyebrow">Base Maestra — Hoteles GHL</p>
+  <h1>Correos de revisión — Ciclo Sep-26</h1>
+  <p>42 propiedades · plantilla de revisión mensual de diálogos del chatbot</p>
+</div>
+<div class="layout">
+  <nav class="nav">
+    <p class="nav-title">Ir a hotel</p>
+    <a href="#arsenal" class="nav-item"><span class="nav-num">01</span>Arsenal</a><a href="#ghl-lago-titicaca" class="nav-item"><span class="nav-num">02</span>GHL Lago Titicaca</a><a href="#geotel-calama" class="nav-item"><span class="nav-num">03</span>Geotel Calama</a><a href="#ghl-collection-hamilton" class="nav-item"><span class="nav-num">04</span>GHL Collection Hamilton</a><a href="#hotel-tequendama-bogotá" class="nav-item"><span class="nav-num">05</span>Hotel Tequendama Bogotá</a><a href="#ghl-style-barrancabermeja" class="nav-item"><span class="nav-num">06</span>GHL Style Barrancabermeja</a><a href="#park-lake-luxury" class="nav-item"><span class="nav-num">07</span>Park Lake Luxury</a><a href="#san-lazaro-art" class="nav-item"><span class="nav-num">08</span>San Lazaro Art</a><a href="#sonesta-puno" class="nav-item"><span class="nav-num">09</span>Sonesta Puno</a><a href="#ghl-montería" class="nav-item"><span class="nav-num">10</span>GHL Montería</a><a href="#latam-xela" class="nav-item"><span class="nav-num">11</span>LATAM XELA</a><a href="#ghl-portón-medellín" class="nav-item"><span class="nav-num">12</span>GHL Portón Medellín</a><a href="#ghl-relax-club-hotel-el-puente" class="nav-item"><span class="nav-num">13</span>GHL Relax Club Hotel el Puente</a><a href="#ghl-relax-hotel-corales-de-indias" class="nav-item"><span class="nav-num">14</span>GHL Relax Hotel Corales de Indias</a><a href="#ghl-style-neiva" class="nav-item"><span class="nav-num">15</span>GHL Style Neiva</a><a href="#ghl-style-yopal" class="nav-item"><span class="nav-num">16</span>GHL Style Yopal</a><a href="#ghl-style-bogotá-occidente" class="nav-item"><span class="nav-num">17</span>GHL Style Bogotá Occidente</a><a href="#ghl-relax-hotel-sunrise" class="nav-item"><span class="nav-num">18</span>GHL Relax Hotel Sunrise</a><a href="#makani-luxury-wanderlust" class="nav-item"><span class="nav-num">19</span>Makani Luxury Wanderlust</a><a href="#sonesta-bucaramanga" class="nav-item"><span class="nav-num">20</span>Sonesta Bucaramanga</a><a href="#sonesta-arequipa" class="nav-item"><span class="nav-num">21</span>Sonesta Arequipa</a><a href="#sonesta-bogotá" class="nav-item"><span class="nav-num">22</span>Sonesta Bogotá</a><a href="#sonesta-cali" class="nav-item"><span class="nav-num">23</span>Sonesta Cali</a><a href="#sonesta-cartagena" class="nav-item"><span class="nav-num">24</span>Sonesta Cartagena</a><a href="#sonesta-cusco" class="nav-item"><span class="nav-num">25</span>Sonesta Cusco</a><a href="#sonesta-hotel-el-olivar" class="nav-item"><span class="nav-num">26</span>Sonesta Hotel El Olivar</a><a href="#sonesta-ibague" class="nav-item"><span class="nav-num">27</span>Sonesta Ibague</a><a href="#sonesta-hotel-loja" class="nav-item"><span class="nav-num">28</span>Sonesta Hotel Loja</a><a href="#sonesta-hotel-osorno" class="nav-item"><span class="nav-num">29</span>Sonesta Hotel Osorno</a><a href="#sonesta-pereira" class="nav-item"><span class="nav-num">30</span>Sonesta Pereira</a><a href="#sonesta-yucay" class="nav-item"><span class="nav-num">31</span>Sonesta Yucay</a><a href="#sonesta-valledupar" class="nav-item"><span class="nav-num">32</span>Sonesta Valledupar</a><a href="#geotel-antofagasta" class="nav-item"><span class="nav-num">33</span>Geotel Antofagasta</a><a href="#ghl-abadía-plaza" class="nav-item"><span class="nav-num">34</span>GHL Abadía Plaza</a><a href="#ghl-collection-armería-real" class="nav-item"><span class="nav-num">35</span>GHL Collection Armería Real</a><a href="#ghl-collection-biohotel-organic-suites" class="nav-item"><span class="nav-num">36</span>GHL Collection Biohotel Organic Suites</a><a href="#ghl-collection-bioxury" class="nav-item"><span class="nav-num">37</span>GHL Collection Bioxury</a><a href="#ghl-barranquilla" class="nav-item"><span class="nav-num">38</span>GHL Barranquilla</a><a href="#ghl-capital" class="nav-item"><span class="nav-num">39</span>GHL Capital</a><a href="#ghl-collection-93" class="nav-item"><span class="nav-num">40</span>GHL Collection 93</a><a href="#ghl-grand-villavicencio" class="nav-item"><span class="nav-num">41</span>GHL Grand Villavicencio</a><a href="#ghl-relax-hotel-costa-azul" class="nav-item"><span class="nav-num">42</span>GHL Relax Hotel Costa Azul</a>
+  </nav>
+  <main class="content">
+    
+<article class="card" id="arsenal">
+  <div class="card-top">
+    <span class="card-index">01 / 42</span>
+    <h2>Arsenal</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Luis Saez &lt;<a class="mailto" href="mailto:luis.saez@ghlhoteles.com">luis.saez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Arsenal</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Luis,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-lago-titicaca">
+  <div class="card-top">
+    <span class="card-index">02 / 42</span>
+    <h2>GHL Lago Titicaca</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Milagros Velazco Reyes &lt;<a class="mailto" href="mailto:milagros.velazco@ghlhoteles.com">milagros.velazco@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Lago Titicaca</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Milagros,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="geotel-calama">
+  <div class="card-top">
+    <span class="card-index">03 / 42</span>
+    <h2>Geotel Calama</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Katherine Mora &lt;<a class="mailto" href="mailto:katherine.mora@ghlhoteles.com">katherine.mora@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Geotel Calama</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Katherine,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-collection-hamilton">
+  <div class="card-top">
+    <span class="card-index">04 / 42</span>
+    <h2>GHL Collection Hamilton</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Wilson Bohorquez &lt;<a class="mailto" href="mailto:andres.bohorquez@ghlhoteles.com">andres.bohorquez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Collection Hamilton</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Wilson,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="hotel-tequendama-bogotá">
+  <div class="card-top">
+    <span class="card-index">05 / 42</span>
+    <h2>Hotel Tequendama Bogotá</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Sara Judith Aguirre &lt;<a class="mailto" href="mailto:sara.aguirre@ghlhoteles.com">sara.aguirre@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Hotel Tequendama Bogotá</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Sara,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-style-barrancabermeja">
+  <div class="card-top">
+    <span class="card-index">06 / 42</span>
+    <h2>GHL Style Barrancabermeja</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Luis Martinez &lt;<a class="mailto" href="mailto:luis.martinez@ghlhoteles.com">luis.martinez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Style Barrancabermeja</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Luis,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="park-lake-luxury">
+  <div class="card-top">
+    <span class="card-index">07 / 42</span>
+    <h2>Park Lake Luxury</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Sergio Víctor Alejandro Yevenes Escobar &lt;<a class="mailto" href="mailto:sergio.yevenes@ghlhoteles.com">sergio.yevenes@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Park Lake Luxury</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Sergio,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="san-lazaro-art">
+  <div class="card-top">
+    <span class="card-index">08 / 42</span>
+    <h2>San Lazaro Art</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Keilis Mercado &lt;<a class="mailto" href="mailto:keilis.mercado@ghlhoteles.com">keilis.mercado@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | San Lazaro Art</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Keilis,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-puno">
+  <div class="card-top">
+    <span class="card-index">09 / 42</span>
+    <h2>Sonesta Puno</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Delmy Nuñez &lt;<a class="mailto" href="mailto:delmy.nunez@ghlhoteles.com">delmy.nunez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Puno</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Delmy,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-montería">
+  <div class="card-top">
+    <span class="card-index">10 / 42</span>
+    <h2>GHL Montería</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Jose Medina &lt;<a class="mailto" href="mailto:mauricio.medina@ghlhoteles.com">mauricio.medina@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Montería</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Jose,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="latam-xela">
+  <div class="card-top">
+    <span class="card-index">11 / 42</span>
+    <h2>LATAM XELA</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Gabriela Rodas &lt;<a class="mailto" href="mailto:gabriela.rodas@ghlhoteles.com">gabriela.rodas@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | LATAM XELA</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Gabriela,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-portón-medellín">
+  <div class="card-top">
+    <span class="card-index">12 / 42</span>
+    <h2>GHL Portón Medellín</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Jose Fernando Villareal &lt;<a class="mailto" href="mailto:jose.villareal@ghlhoteles.com">jose.villareal@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Portón Medellín</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Jose,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-relax-club-hotel-el-puente">
+  <div class="card-top">
+    <span class="card-index">13 / 42</span>
+    <h2>GHL Relax Club Hotel el Puente</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Maria Gomez &lt;<a class="mailto" href="mailto:angelica.gomez@ghlhoteles.com">angelica.gomez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Relax Club Hotel el Puente</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Maria,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-relax-hotel-corales-de-indias">
+  <div class="card-top">
+    <span class="card-index">14 / 42</span>
+    <h2>GHL Relax Hotel Corales de Indias</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Andres Narvaez &lt;<a class="mailto" href="mailto:andres.narvaez@ghlhoteles.com">andres.narvaez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Relax Hotel Corales de Indias</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Andres,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-style-neiva">
+  <div class="card-top">
+    <span class="card-index">15 / 42</span>
+    <h2>GHL Style Neiva</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Carlos Robayo &lt;<a class="mailto" href="mailto:yobani.robayo@ghlhoteles.com">yobani.robayo@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Style Neiva</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Carlos,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-style-yopal">
+  <div class="card-top">
+    <span class="card-index">16 / 42</span>
+    <h2>GHL Style Yopal</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Mafy Daniela Rodriguez &lt;<a class="mailto" href="mailto:daniela.rodriguez@ghlhoteles.com">daniela.rodriguez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Style Yopal</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Mafy,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-style-bogotá-occidente">
+  <div class="card-top">
+    <span class="card-index">17 / 42</span>
+    <h2>GHL Style Bogotá Occidente</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Leidy Cely &lt;<a class="mailto" href="mailto:jrecepcion.bogotaoccidente@ghlhoteles.com">jrecepcion.bogotaoccidente@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Style Bogotá Occidente</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Leidy,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-relax-hotel-sunrise">
+  <div class="card-top">
+    <span class="card-index">18 / 42</span>
+    <h2>GHL Relax Hotel Sunrise</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Juan Martinez &lt;<a class="mailto" href="mailto:juan.martinez@ghlhoteles.com">juan.martinez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Relax Hotel Sunrise</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Juan,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="makani-luxury-wanderlust">
+  <div class="card-top">
+    <span class="card-index">19 / 42</span>
+    <h2>Makani Luxury Wanderlust</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Jose Macea &lt;<a class="mailto" href="mailto:jose.macea@ghlhoteles.com">jose.macea@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Makani Luxury Wanderlust</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Jose,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-bucaramanga">
+  <div class="card-top">
+    <span class="card-index">20 / 42</span>
+    <h2>Sonesta Bucaramanga</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Jeferson Reyes &lt;<a class="mailto" href="mailto:jeferson.reyes@ghlhoteles.com">jeferson.reyes@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Bucaramanga</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Jeferson,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-arequipa">
+  <div class="card-top">
+    <span class="card-index">21 / 42</span>
+    <h2>Sonesta Arequipa</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Tania Catacora &lt;<a class="mailto" href="mailto:jefederecepcion.sonestaarequipa@ghlhoteles.com">jefederecepcion.sonestaarequipa@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Arequipa</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Tania,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-bogotá">
+  <div class="card-top">
+    <span class="card-index">22 / 42</span>
+    <h2>Sonesta Bogotá</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Catalina Rojas &lt;<a class="mailto" href="mailto:catalina.rojas@ghlhoteles.com">catalina.rojas@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Bogotá</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Catalina,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-cali">
+  <div class="card-top">
+    <span class="card-index">23 / 42</span>
+    <h2>Sonesta Cali</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Lorena Figueroa &lt;<a class="mailto" href="mailto:lorena.figueroa@ghlhoteles.com">lorena.figueroa@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Cali</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Lorena,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-cartagena">
+  <div class="card-top">
+    <span class="card-index">24 / 42</span>
+    <h2>Sonesta Cartagena</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Liliana Rodriguez &lt;<a class="mailto" href="mailto:liliana.rodriguez@ghlhoteles.com">liliana.rodriguez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Cartagena</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Liliana,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-cusco">
+  <div class="card-top">
+    <span class="card-index">25 / 42</span>
+    <h2>Sonesta Cusco</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Adolfo Alfaro &lt;<a class="mailto" href="mailto:adolfo.alfaro@ghlhoteles.com">adolfo.alfaro@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Cusco</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Adolfo,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-hotel-el-olivar">
+  <div class="card-top">
+    <span class="card-index">26 / 42</span>
+    <h2>Sonesta Hotel El Olivar</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Andrea Silvana Zevallos &lt;<a class="mailto" href="mailto:andrea.zevallos@ghlhoteles.com">andrea.zevallos@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Hotel El Olivar</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Andrea,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-ibague">
+  <div class="card-top">
+    <span class="card-index">27 / 42</span>
+    <h2>Sonesta Ibague</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Wilmer Rodriguez &lt;<a class="mailto" href="mailto:wilmer.rodriguez@ghlhoteles.com">wilmer.rodriguez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Ibague</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Wilmer,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-hotel-loja">
+  <div class="card-top">
+    <span class="card-index">28 / 42</span>
+    <h2>Sonesta Hotel Loja</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Miryam Ramirez &lt;<a class="mailto" href="mailto:miryam.ramirez@ghlhoteles.com">miryam.ramirez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Hotel Loja</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Miryam,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-hotel-osorno">
+  <div class="card-top">
+    <span class="card-index">29 / 42</span>
+    <h2>Sonesta Hotel Osorno</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Cristina Sanzana &lt;<a class="mailto" href="mailto:cristina.sanzana@ghlhoteles.com">cristina.sanzana@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Hotel Osorno</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Cristina,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-pereira">
+  <div class="card-top">
+    <span class="card-index">30 / 42</span>
+    <h2>Sonesta Pereira</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Edwar Pacanchique &lt;<a class="mailto" href="mailto:edwar.pacanchique@ghlhoteles.com">edwar.pacanchique@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Pereira</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Edwar,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-yucay">
+  <div class="card-top">
+    <span class="card-index">31 / 42</span>
+    <h2>Sonesta Yucay</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Monica Chirinos &lt;<a class="mailto" href="mailto:monica.chirinos@ghlhoteles.com">monica.chirinos@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Yucay</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Monica,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="sonesta-valledupar">
+  <div class="card-top">
+    <span class="card-index">32 / 42</span>
+    <h2>Sonesta Valledupar</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Emerson David Cotes &lt;<a class="mailto" href="mailto:emerson.cotes@ghlhoteles.com">emerson.cotes@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Sonesta Valledupar</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Emerson,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="geotel-antofagasta">
+  <div class="card-top">
+    <span class="card-index">33 / 42</span>
+    <h2>Geotel Antofagasta</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Nelson Uriel Perez Ortiz &lt;<a class="mailto" href="mailto:nelson.perez@ghlhoteles.com">nelson.perez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | Geotel Antofagasta</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Nelson,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-abadía-plaza">
+  <div class="card-top">
+    <span class="card-index">34 / 42</span>
+    <h2>GHL Abadía Plaza</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Katerine Ospina Gil &lt;<a class="mailto" href="mailto:suprecepcion.abadiaplaza@ghlhoteles.com">suprecepcion.abadiaplaza@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Abadía Plaza</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Katerine,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-collection-armería-real">
+  <div class="card-top">
+    <span class="card-index">35 / 42</span>
+    <h2>GHL Collection Armería Real</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Saray Estrada &lt;<a class="mailto" href="mailto:Saray.estrada@ghlhoteles.com">Saray.estrada@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Collection Armería Real</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Saray,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-collection-biohotel-organic-suites">
+  <div class="card-top">
+    <span class="card-index">36 / 42</span>
+    <h2>GHL Collection Biohotel Organic Suites</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Maria Del Pilar Narvaez &lt;<a class="mailto" href="mailto:pilar.narvaez@ghlhoteles.com">pilar.narvaez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Collection Biohotel Organic Suites</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Maria,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-collection-bioxury">
+  <div class="card-top">
+    <span class="card-index">37 / 42</span>
+    <h2>GHL Collection Bioxury</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v"><span class="no-data">Sin contacto registrado</span> &lt;<a class="mailto" href="mailto:calidad.bioxury@ghlhoteles.com">calidad.bioxury@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Collection Bioxury</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola equipo,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-barranquilla">
+  <div class="card-top">
+    <span class="card-index">38 / 42</span>
+    <h2>GHL Barranquilla</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Jose Carlos Ibañez &lt;<a class="mailto" href="mailto:jose.ibanez@ghlhoteles.com">jose.ibanez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Barranquilla</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Jose,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-capital">
+  <div class="card-top">
+    <span class="card-index">39 / 42</span>
+    <h2>GHL Capital</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Maira Piza &lt;<a class="mailto" href="mailto:maira.piza@ghlhoteles.com">maira.piza@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Capital</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Maira,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-collection-93">
+  <div class="card-top">
+    <span class="card-index">40 / 42</span>
+    <h2>GHL Collection 93</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">James Mendoza &lt;<a class="mailto" href="mailto:james.mendoza@ghlhoteles.com">james.mendoza@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Collection 93</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola James,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-grand-villavicencio">
+  <div class="card-top">
+    <span class="card-index">41 / 42</span>
+    <h2>GHL Grand Villavicencio</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Ingrid Mendez &lt;<a class="mailto" href="mailto:jimena.mendez@ghlhoteles.com">jimena.mendez@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Grand Villavicencio</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Ingrid,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+<article class="card" id="ghl-relax-hotel-costa-azul">
+  <div class="card-top">
+    <span class="card-index">42 / 42</span>
+    <h2>GHL Relax Hotel Costa Azul</h2>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-l">Para</span><span class="meta-v">Marlis Marriaga &lt;<a class="mailto" href="mailto:marlys.marriaga@ghlhoteles.com">marlys.marriaga@ghlhoteles.com</a>&gt;</span></div>
+    <div class="meta-row"><span class="meta-l">CC</span><span class="meta-v"><a class="mailto" href="mailto:paula.robayo@logicaghl.com">paula.robayo@logicaghl.com</a><br><a class="mailto" href="mailto:valentina.gonzalez@ghlholding.com">valentina.gonzalez@ghlholding.com</a></span></div>
+    <div class="meta-row"><span class="meta-l">Asunto</span><span class="meta-v subject">Revisión mensual de diálogos del chatbot | GHL Relax Hotel Costa Azul</span></div>
+  </div>
+  <div class="body-block">
+<p>Hola Marlis,</p>
+<p>Espero que te encuentres muy bien. Dando continuidad a la gestión que venimos adelantando para mantener la información del chatbot actualizada en cada propiedad, te comparto el PDF con el listado de diálogos activos correspondiente a este mes.</p>
+<p>Te pido revisarlo y validar que los datos reflejados en cada diálogo correspondan a la realidad actual del hotel, prestando especial atención a:</p>
+<ul class="email-list">
+<li>Precios</li>
+<li>Horarios</li>
+<li>Capacidades</li>
+<li>Correos y teléfonos de contacto</li>
+<li>Fechas o vigencias</li>
+<li>Indicaciones para reservas</li>
+<li>Condiciones y restricciones</li>
+</ul>
+<p>Mantener esta información al día es fundamental para que los huéspedes reciban respuestas precisas y coherentes con lo que ofrece el hotel, evitando posibles confusiones entre los distintos canales de comunicación.</p>
+<p>Para facilitar el proceso, cualquier ajuste que identifiques deberá indicarse con el número del diálogo al que corresponde, de la siguiente manera:</p>
+<p class="ejemplo-label">Ejemplo</p>
+<div class="example-box">
+  <div class="ex-col ex-antes">
+    <div class="ex-label">Antes</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:00 a.m. a 10:00 p.m.</div>
+  </div>
+  <div class="ex-col ex-despues">
+    <div class="ex-label">Después</div>
+    <div class="ex-dialog">Diálogo 024 – Restaurante</div>
+    <div class="ex-text">Horario de atención de 6:30 a.m. a 9:00 p.m.</div>
+  </div>
+</div>
+<p>El plazo para el envío de observaciones y ajustes es hasta el día 10 de cada mes.</p>
+<p>Quedo atento a cualquier inquietud que pueda surgir.</p>
+<p class="firma">Cordialmente,</p>
+  </div>
+</article>
+  </main>
+</div>
+</body>
+</html>
