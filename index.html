@@ -3091,9 +3091,9 @@ function chartSinRespuestaRecurrente(limit) {
     const recientes = [...rows].sort((a,b)=>cicloSortKey(b.ciclo)-cicloSortKey(a.ciclo));
     let racha = 0;
     for (const r of recientes) { if (r.respuesta) break; racha++; }
-    if (racha >= 2) entries.push([hotel, racha]);
+    if (racha >= 3) entries.push([hotel, racha]);
   });
-  return hbarChart(entries, limit, '#9c0006', 'Ningún hotel acumula falta de respuesta en más de un ciclo. ✅', (hotel,v)=>`${hotel}: sin respuesta en los últimos ${v} ciclos seguidos`);
+  return hbarChart(entries, limit, '#9c0006', 'Ningún hotel lleva 3 ciclos seguidos sin responder. ✅', (hotel,v)=>`${hotel}: sin respuesta en los últimos ${v} ciclos seguidos`);
 }
 
 function cicloSortKey(c) { const [m,y] = c.split('-'); return (+y)*12 + MESES_ORDEN.indexOf(m); }
@@ -3263,7 +3263,7 @@ function renderMetricasDashboard() {
     </div>
     <div class="dash-card">
       <h3>Hoteles sin respuesta recurrente</h3>
-      <p class="dash-desc">Hoteles que llevan 2 o más ciclos seguidos sin responder el correo de revisión (hasta el ciclo más reciente).</p>
+      <p class="dash-desc">Hoteles que no han respondido el correo de revisión en ninguno de los últimos 3 ciclos (el número es la racha actual de ciclos sin respuesta).</p>
       ${chartSinRespuestaRecurrente(8)}
       <div class="dash-action">📌 Acción: escalar contacto (llamada o WhatsApp) con estos hoteles antes del cierre del próximo ciclo.</div>
     </div>
