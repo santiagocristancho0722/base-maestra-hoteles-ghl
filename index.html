@@ -3047,13 +3047,13 @@ function hbarChart(entries, limit, color, emptyMsg, titleFn) {
   const top = entries.sort((a,b)=>b[1]-a[1]).slice(0,limit);
   if(!top.length) return `<div class="dash-empty">${emptyMsg}</div>`;
   const maxV = top[0][1];
-  const rowH = 17, barX = 108, barMaxW = 90, W = 240, H = top.length*rowH;
+  const labelW = Math.max(...top.map(([l])=>String(l).length)) * 4.9;
+  const rowH = 17, barX = Math.max(108, Math.ceil(labelW) + 8), barMaxW = 90, W = barX + barMaxW + 24, H = top.length*rowH;
   let rows = '';
   top.forEach(([label,v],i)=>{
     const y = i*rowH;
     const w = Math.max((v/maxV)*barMaxW, 3);
-    const short = label.length>18 ? label.slice(0,17)+'…' : label;
-    rows += `<text x="0" y="${y+12}" font-size="8.5" font-weight="600" fill="#023859">${short}</text>`;
+    rows += `<text x="0" y="${y+12}" font-size="8.5" font-weight="600" fill="#023859">${label}</text>`;
     rows += `<rect x="${barX}" y="${y+2}" width="${w.toFixed(1)}" height="12" rx="2" fill="${color}"><title>${titleFn(label,v)}</title></rect>`;
     rows += `<text x="${barX+w+5}" y="${y+12}" font-size="8.5" font-weight="700" fill="${color}">${v}</text>`;
   });
